@@ -1,21 +1,36 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import "react-native-gesture-handler";
+import { StyleSheet, Text, View, Platform, StatusBar } from "react-native";
+import HomeScreen from "./app/screens/HomeScreen";
+import AboutUsScreen from "./app/screens/AboutUsScreen";
+import ContactUsScreen from "./app/screens/ContactUsScreen";
+import Form from "./app/components/Form";
+import DropDown from "./app/components/DropDown";
 
-export default function App() {
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "react-navigation-stack";
+import { createAppContainer } from "react-navigation";
+import RequestServiceScreen from "./app/screens/RequestService";
+import RegisterScreen from "./app/screens/RegisterScreen";
+import LoginScreen from "./app/screens/LoginScreen";
+import WelcomeScreen from "./app/screens/WelcomeScreen";
+import UserAuthStack from "./app/routes/UserAuthStack";
+import AppDrawerNav from "./app/routes/AppDrawerNav";
+import RootStackNav from "./app/routes/RootStackNav";
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <RootStackNav />
+    </>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+// const StackNavigator = createStackNavigator({
+//   WELCOME: WelcomeScreen,
+//   REGISTER: RegisterScreen,
+//   LOGIN: LoginScreen,
+// });
+
+// const App = createAppContainer(StackNavigator);
+export default App;
