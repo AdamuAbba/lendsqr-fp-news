@@ -28,6 +28,7 @@
     "web": {
       "favicon": "./app/assets/favicon.png"
     },
-    "description": "fourth push\n*Request page adjusted (still in development)\n*code refactored \n*logo optimisation\n\ncurrently working on Request page"
+    "description": "✅ Request page updated (no back-end)\n✅ code refactored \n✅ delicacy input added on request page (cooking checkbox)\n✅ Time, Date picker added\n \n\n❌ alert on Request button press to be implemented\n❌ form data back-end to be implemented\n",
+    "githubUrl": "https://github.com/AdamuAbba/Rad-Dish.git"
   }
 }

@@ -1,0 +1,63 @@
+// <View style={styles.container}>
+    //   <ScrollView style={{ flex: 1 }}>
+    //     <View style={{ flex: 1 }}>
+    //       <Banner
+    //         firstCaption="dummy Text"
+    //         description=" some description"
+    //         bannerImage={{
+    //           uri: "https://i.pinimg.com/564x/c7/dd/ac/c7ddac4d132b59ec59bbd0a81acbacfb.jpg",
+    //         }}
+    //       />
+    //     </View>
+    //     <View style={{ flex: 1 }}>
+    //       <Banner
+    //         firstCaption="dummy Text"
+    //         description=" some description"
+    //         buttonTitle="proceed.."
+    //         bannerImage={require("./../assets/soup.jpg")}
+    //       />
+    //     </View>
+    //     <View style={{ flex: 1, marginBottom: 1 }}>
+    //       <Banner
+    //         firstCaption="dummy Text"
+    //         description=" some description"
+    //         buttonTitle="contact us"
+    //         bannerImage={require("./../assets/ofadaSauce.jpg")}
+    //       />
+    //     </View>
+    //   </ScrollView>
+    // </View>
+
+
+
+
+
+
+
+
+
+    <DrawerItem
+            icon={() => (
+              <Icon name="home-outline" type="material-community" size={25} />
+            )}
+            label="Home"
+            onPress={() => navigation.navigate("Home")}
+          />
+          <DrawerItem
+            icon={() => (
+              <Icon
+                name="information-outline"
+                type="material-community"
+                size={25}
+              />
+            )}
+            label="About"
+            onPress={() => navigation.navigate("About")}
+          />
+          <DrawerItem
+            icon={() => (
+              <Icon name="shopping-cart" type="font-awesome" size={20} />
+            )}
+            label="Request"
+            onPress={() => navigation.navigate("Request")}
+          />

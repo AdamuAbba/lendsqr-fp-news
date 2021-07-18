@@ -18,6 +18,7 @@ import WelcomeScreen from "./app/screens/WelcomeScreen";
 import UserAuthStack from "./app/routes/UserAuthStack";
 import AppDrawerNav from "./app/routes/AppDrawerNav";
 import RootStackNav from "./app/routes/RootStackNav";
+
 const App = () => {
   return (
     <>

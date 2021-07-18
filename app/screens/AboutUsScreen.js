@@ -1,17 +1,25 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 function AboutUsScreen(props) {
   return (
-    <View style={styles.container}>
-      <View>
-        <Text>About us</Text>
-      </View>
-    </View>
+    <ScrollView scrollEnabled={true}>
+      <View style={{ height: 70, backgroundColor: "blue" }}></View>
+      <View style={{ height: 70, backgroundColor: "blue" }}></View>
+      <View style={{ height: 70, backgroundColor: "blue" }}></View>
+      <View style={{ height: 70, backgroundColor: "blue" }}></View>
+      <View style={{ height: 70, backgroundColor: "blue" }}></View>
+      <View style={{ height: 70, backgroundColor: "blue" }}></View>
+      <View style={{ height: 70, backgroundColor: "blue" }}></View>
+      <View style={{ height: 70, backgroundColor: "blue" }}></View>
+      <View style={{ height: 70, backgroundColor: "blue" }}></View>
+      <View style={{ height: 70, backgroundColor: "blue" }}></View>
+      <View style={{ height: 70, backgroundColor: "blue" }}></View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  scrollContainer: {
     flex: 1,
   },
 });

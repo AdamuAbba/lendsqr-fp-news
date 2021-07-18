@@ -1,31 +1,111 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
-import { Input, Button, Text, SocialIcon } from "react-native-elements";
+import { Input, Button, Text, SocialIcon, Icon } from "react-native-elements";
 import firebase from "../configs/firebase/fireBaseConfig";
 import { globalStyles } from "../configs/GlobalStyle";
 const SignUpForm = ({ navigation }) => {
+  useEffect(() => {
+    userLogCheck();
+  });
+  const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [signedInUser, setSignedInUser] = useState("");
+
+  const dbRef = firebase.database().ref();
+
+  function userLogCheck() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        setSignedInUser(user);
+      } else {
+        null;
+      }
+    });
+  }
 
   const signUp = async () => {
     try {
-      await firebase.auth().createUserWithEmailAndPassword(email, password);
-      navigation.navigate("LOGIN");
+      await firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then((value) =>
+          dbRef.child("Users").child(value.user.uid).set({
+            username: userName,
+            Email: value.user.email,
+            ID: value.user.uid,
+          })
+        );
     } catch (e) {
       setError(e.message);
     }
   };
   return (
     <>
-      <Input label="Email" value={email} onChangeText={setEmail} />
+      <Input
+        label="user name"
+        placeholder="e.g. Radish333"
+        inputContainerStyle={{ borderBottomWidth: 0 }}
+        inputStyle={globalStyles.input}
+        labelStyle={globalStyles.label}
+        value={userName}
+        onChangeText={setUserName}
+        leftIcon={
+          <Icon
+            type="material"
+            name="person"
+            size={23}
+            style={styles.iconStyle}
+            // color={isActive === true ? colors.radGreen : "black"}
+          />
+        }
+      />
+      <Input
+        label="Email"
+        placeholder="  e.g. abc@mail.com"
+        inputContainerStyle={{ borderBottomWidth: 0 }}
+        inputStyle={globalStyles.input}
+        labelStyle={globalStyles.label}
+        value={email}
+        onChangeText={setEmail}
+        leftIcon={
+          <Icon
+            type="material"
+            name="email"
+            size={23}
+            style={styles.iconStyle}
+            // color={isActive === true ? colors.radGreen : "black"}
+          />
+        }
+      />
       <Input
         label="Password"
+        placeholder="  e.g. abc@mail.com"
+        inputContainerStyle={{ borderBottomWidth: 0 }}
+        inputStyle={globalStyles.input}
+        labelStyle={globalStyles.label}
         value={password}
         onChangeText={setPassword}
         secureTextEntry={true}
+        leftIcon={
+          <Icon
+            name="lock"
+            type="material"
+            size={23}
+            style={styles.iconStyle}
+            // color={isActive === true ? colors.radGreen : "black"}
+          />
+        }
       />
       {error ? <Text style={styles.errorText}>{error}</Text> : null}
+
+      <TouchableOpacity
+        style={styles.forgotView}
+        onPress={() => navigation.navigate("LOGIN")}
+      >
+        <Text style={styles.forgotText}>forgot Password ?</Text>
+      </TouchableOpacity>
       <Button
         title="submit"
         type="solid"
@@ -34,12 +114,6 @@ const SignUpForm = ({ navigation }) => {
         raised={true}
         onPress={() => signUp()}
       />
-      <TouchableOpacity
-        style={styles.forgotView}
-        onPress={() => navigation.navigate("LOGIN")}
-      >
-        <Text style={styles.forgotText}>forgot Password ?</Text>
-      </TouchableOpacity>
       <View style={styles.icon}>
         <SocialIcon type="facebook" iconSize={15} style={styles.iconConfig} />
         <SocialIcon type="twitter" iconSize={15} style={styles.iconConfig} />
@@ -62,7 +136,7 @@ const styles = StyleSheet.create({
   },
   forgotView: {
     alignSelf: "center",
-    paddingTop: 5,
+    marginBottom: 3,
   },
   forgotText: {
     fontWeight: "bold",

@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { View, Button, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
+import { Button, Chip } from "react-native-elements";
+import { globalStyles } from "../configs/GlobalStyle";
+import colors from "../configs/colors";
+import { LinearGradient } from "expo-linear-gradient";
 
 const DateAndTime = () => {
   const [date, setDate] = useState(new Date(1598051730000));
@@ -41,17 +45,34 @@ const DateAndTime = () => {
   return (
     <>
       <View>
-        <Text style={{ alignSelf: "flex-end", fontSize: 30 }}>
-          under construction
-        </Text>
-        <View>
-          {/* //* Button to trigger the Date Picker UI*/}
-          <Button onPress={showDatepicker} title="Show date picker!" />
-        </View>
-        <View>
-          {/* //* Button to trigger the Time Picker UI*/}
-          <Button onPress={showTimepicker} title="Show time picker!" />
-        </View>
+        {/* //* Button to trigger the Date Picker UI*/}
+        <Chip
+          onPress={showDatepicker}
+          title="Date"
+          raised={true}
+          ViewComponent={LinearGradient}
+          linearGradientProps={{
+            colors: [colors.radOrange, "red"],
+            start: { x: 0, y: 0.5 },
+            end: { x: 1, y: 0.5 },
+          }}
+          containerStyle={[styles.container, { alignSelf: "flex-end" }]}
+        />
+
+        {/* //* Button to trigger the Time Picker UI*/}
+        <Chip
+          onPress={showTimepicker}
+          title="Time"
+          raised={true}
+          ViewComponent={LinearGradient}
+          containerStyle={styles.container}
+          linearGradientProps={{
+            colors: [colors.radOrange, "red"],
+            start: { x: 0, y: 0.5 },
+            end: { x: 1, y: 0.5 },
+          }}
+        />
+
         {show && (
           <DateTimePicker
             testID="dateTimePicker"
@@ -66,5 +87,12 @@ const DateAndTime = () => {
     </>
   );
 };
-
+const styles = StyleSheet.create({
+  container: {
+    width: "70%",
+    marginBottom: 8,
+    marginHorizontal: 8,
+    borderRadius: 18,
+  },
+});
 export default DateAndTime;

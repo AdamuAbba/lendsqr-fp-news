@@ -1,16 +1,25 @@
 import React from "react";
-import { Text } from "react-native-elements";
+import { Text, Divider } from "react-native-elements";
 import { StyleSheet, ImageBackground, View } from "react-native";
 import Banner from "../components/Banner";
 import LogInForm from "../components/LogInForm";
-
+import colors from "../configs/colors";
+import { globalStyles } from "../configs/GlobalStyle";
 const image =
   "https://images.pexels.com/photos/255501/pexels-photo-255501.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500";
 function LoginScreen() {
   return (
     <ImageBackground style={styles.container} source={{ uri: image }}>
-      <View style={styles.text}>
-        <Text>test</Text>
+      <View style={globalStyles.bannerTextView}>
+        <Text style={[globalStyles.globalTitleFont, { color: "#fff" }]}>
+          we work and you chill
+        </Text>
+        <Divider
+          orientation="horizontal"
+          width={10}
+          style={[globalStyles.dividerIcon, { borderRadius: 0 }]}
+          color={colors.radOrange}
+        />
       </View>
       <View style={styles.formContainer}>
         <View style={styles.textView}>
@@ -29,12 +38,12 @@ function LoginScreen() {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     height: "100%",
     width: "100%",
-    flex: 1,
     justifyContent: "space-between",
   },
-  text: {
+  textView: {
     flex: 1,
   },
   formContainer: {
@@ -43,9 +52,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
   },
-  textView: {
-    flex: 1,
-  },
+
   textTitle: {
     justifyContent: "center",
     alignSelf: "center",

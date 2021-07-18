@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Text, Button, Image } from "react-native-elements";
 import {
   View,
@@ -8,19 +8,31 @@ import {
   Platform,
 } from "react-native";
 import { globalStyles } from "../configs/GlobalStyle";
+import RadDishBanner from "../components/RadDishBanner";
+import firebase from "../configs/firebase/fireBaseConfig";
 const image =
   "https://images.pexels.com/photos/1624487/pexels-photo-1624487.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260";
 const cardImage =
   "https://i.pinimg.com/originals/98/2e/bc/982ebc7d69e8f9fcdbf30306425a58b4.gif";
+
 const WelcomeScreen = ({ navigation }) => {
+  useEffect(() => {
+    userLogCheck();
+  });
+
+  const userLogCheck = () => {
+    firebase.auth().onAuthStateChanged((user) => {
+      navigation.navigate(user ? "AppDrawerNav" : "UserAuthStack");
+    });
+  };
   return (
     <>
       <View style={styles.container}>
         <ImageBackground style={styles.image} source={{ uri: image }}>
           <View style={styles.firstView}>
-            <Text style={styles.text}>Rad-dish Motor</Text>
+            <Text style={styles.text}>Food & More</Text>
             <Text style={styles.greeting}>WELCOME</Text>
-            <Text style={styles.text}>something inspirational</Text>
+            <Text style={styles.text}>Just relax, we'll cook</Text>
             <View style={styles.buttonView}>
               <Button
                 type="solid"
@@ -39,11 +51,7 @@ const WelcomeScreen = ({ navigation }) => {
             </View>
           </View>
           <View style={styles.banner}>
-            <Image
-              containerStyle={styles.bannerContainer}
-              style={styles.bannerImage}
-              source={require("./../assets/radDishLogo1.gif")}
-            />
+            <RadDishBanner />
           </View>
           <View style={styles.secondView}>
             <Text style={styles.greetingTwo}>something short</Text>
@@ -112,14 +120,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     height: "25%",
     width: "60%",
-  },
-  bannerImage: {
-    height: "100%",
-    width: "100%",
-  },
-  bannerContainer: {
-    borderRadius: 30,
-    elevation: 10,
   },
 });
 export default WelcomeScreen;

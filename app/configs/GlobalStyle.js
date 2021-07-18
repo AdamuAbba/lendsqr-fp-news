@@ -22,4 +22,25 @@ export const globalStyles = StyleSheet.create({
     borderRadius: 20,
     elevation: 7,
   },
+  input: {
+    borderColor: colors.radOrange,
+    borderWidth: 2,
+    borderRadius: 15,
+    backgroundColor: "#cbced4",
+    elevation: 6,
+  },
+  label: {
+    color: "#000000",
+  },
+  dividerIcon: {
+    borderRadius: 10,
+    width: "90%",
+    alignSelf: "center",
+    elevation: 5,
+  },
+  bannerTextView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
