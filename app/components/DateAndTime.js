@@ -14,7 +14,7 @@ const DateAndTime = () => {
   {
     /* //? what's the purpose of this function? */
   }
-  const onChange = (event, selectedDate) => {
+  const onDateTimeChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === "ios");
     setDate(currentDate);
@@ -80,7 +80,7 @@ const DateAndTime = () => {
             mode={mode}
             is24Hour={true}
             display="default"
-            onChange={onChange}
+            onChange={onDateTimeChange}
           />
         )}
       </View>

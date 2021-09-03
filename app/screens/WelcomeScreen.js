@@ -1,15 +1,11 @@
 import React, { useEffect } from "react";
 import { Text, Button, Image } from "react-native-elements";
-import {
-  View,
-  ImageBackground,
-  StyleSheet,
-  StatusBar,
-  Platform,
-} from "react-native";
+import { View, ImageBackground, StyleSheet } from "react-native";
 import { globalStyles } from "../configs/GlobalStyle";
-import RadDishBanner from "../components/RadDishBanner";
 import firebase from "../configs/firebase/fireBaseConfig";
+import RadDishLogo from "../components/RadDishLogo";
+import colors from "../configs/colors";
+
 const image =
   "https://images.pexels.com/photos/1624487/pexels-photo-1624487.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260";
 const cardImage =
@@ -17,45 +13,48 @@ const cardImage =
 
 const WelcomeScreen = ({ navigation }) => {
   useEffect(() => {
-    userLogCheck();
+    return () => {
+      null;
+    };
   });
 
-  const userLogCheck = () => {
-    firebase.auth().onAuthStateChanged((user) => {
-      navigation.navigate(user ? "AppDrawerNav" : "UserAuthStack");
-    });
-  };
   return (
     <>
       <View style={styles.container}>
         <ImageBackground style={styles.image} source={{ uri: image }}>
           <View style={styles.firstView}>
-            <Text style={styles.text}>Food & More</Text>
+            <Text style={styles.welcomeTitle}>Food & More</Text>
             <Text style={styles.greeting}>WELCOME</Text>
-            <Text style={styles.text}>Just relax, we'll cook</Text>
+            <View style={{ marginBottom: 8 }}>
+              <RadDishLogo />
+            </View>
             <View style={styles.buttonView}>
               <Button
-                type="solid"
+                type="outline"
                 title="Register"
+                titleStyle={{ color: colors.radGreen }}
                 buttonStyle={styles.buttonConfig}
                 onPress={() => navigation.navigate("REGISTER")}
                 containerStyle={[styles.button, { marginRight: 10 }]}
               />
+
               <Button
-                type="solid"
+                type="outline"
                 title="Login"
+                titleStyle={{ color: colors.radGreen }}
                 buttonStyle={styles.buttonConfig}
                 onPress={() => navigation.navigate("LOGIN")}
                 containerStyle={styles.button}
               />
             </View>
           </View>
-          <View style={styles.banner}>
+          {/* <View style={styles.banner}>
             <RadDishBanner />
-          </View>
+          </View> */}
           <View style={styles.secondView}>
-            <Text style={styles.greetingTwo}>something short</Text>
-            <Text style={styles.text}>more stuff</Text>
+            <Text style={styles.text}>
+              easy and stress-free online catering solution
+            </Text>
           </View>
         </ImageBackground>
       </View>
@@ -65,7 +64,13 @@ const WelcomeScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   buttonConfig: {
-    backgroundColor: "#4ECDC4",
+    backgroundColor: "#ffff",
+    borderColor: colors.radGreen,
+  },
+  welcomeTitle: {
+    color: "#fff",
+    fontSize: 20,
+    fontWeight: "bold",
   },
   container: {
     flex: 1,
@@ -85,10 +90,11 @@ const styles = StyleSheet.create({
   },
   greeting: {
     fontSize: 50,
-    color: "white",
+    color: colors.radRed,
   },
   text: {
-    color: "white",
+    color: "#fff",
+    fontStyle: "italic",
     fontSize: 20,
     fontWeight: "bold",
   },
@@ -102,11 +108,9 @@ const styles = StyleSheet.create({
     elevation: 10,
   },
   secondView: {
-    alignItems: "flex-end",
     flex: 1,
     position: "absolute",
     bottom: 20,
-    right: 10,
   },
   greetingTwo: {
     fontSize: 30,

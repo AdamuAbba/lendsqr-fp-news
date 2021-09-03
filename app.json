@@ -6,9 +6,9 @@
     "orientation": "portrait",
     "icon": "./app/assets/icon.png",
     "splash": {
-      "image": "./app/assets/splash.png",
+      "image": "./app/assets/radDishSplash2.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#CB6464"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -28,7 +28,7 @@
     "web": {
       "favicon": "./app/assets/favicon.png"
     },
-    "description": "✅ Request page updated (no back-end)\n✅ code refactored \n✅ delicacy input added on request page (cooking checkbox)\n✅ Time, Date picker added\n \n\n❌ alert on Request button press to be implemented\n❌ form data back-end to be implemented\n",
+    "description": "implementing redux",
     "githubUrl": "https://github.com/AdamuAbba/Rad-Dish.git"
   }
 }

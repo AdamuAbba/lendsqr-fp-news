@@ -1,5 +1,4 @@
 import React from "react";
-import { Avatar } from "react-native-elements/dist/avatar/Avatar";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import RegisterScreen from "../screens/RegisterScreen";

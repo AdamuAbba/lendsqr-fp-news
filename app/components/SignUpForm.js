@@ -6,6 +6,9 @@ import { globalStyles } from "../configs/GlobalStyle";
 const SignUpForm = ({ navigation }) => {
   useEffect(() => {
     userLogCheck();
+    return () => {
+      null;
+    };
   });
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
@@ -31,7 +34,7 @@ const SignUpForm = ({ navigation }) => {
         .auth()
         .createUserWithEmailAndPassword(email, password)
         .then((value) =>
-          dbRef.child("Users").child(value.user.uid).set({
+          dbRef.child("Users").child(value.user.uid).child("User Data").set({
             username: userName,
             Email: value.user.email,
             ID: value.user.uid,

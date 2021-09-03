@@ -1,33 +1,105 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  ScrollView,
-  Alert,
-} from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, ScrollView, Alert } from "react-native";
 import { Input, Divider, Button, CheckBox, Icon } from "react-native-elements";
 import { globalStyles } from "../configs/GlobalStyle";
 import RadDishBanner from "./RadDishBanner";
 import colors from "../configs/colors";
 import DateAndTime from "./DateAndTime";
+import { useNavigation } from "@react-navigation/native";
+import firebase from "../configs/firebase/fireBaseConfig";
 const RequestForm = () => {
+  useEffect(() => {
+    userLogCheck();
+    return () => {
+      null;
+    };
+  });
   // const [isActive, setIsActive] = useState(false);
-  const [firstName, setFirstName] = useState("");
+  const [customerName, setCustomerName] = useState("");
   const [servicesValue, setServicesValue] = useState("");
   const [cookingValue, setCookingValue] = useState("");
-  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [nameError, setNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+
   const [phoneNumber, setPhoneNumber] = useState("");
   const [location, setLocation] = useState("");
   const [allergies, setAllergies] = useState("");
   const [delicacy, setDelicacy] = useState("");
   const [servicesIsChecked, setServicesIsChecked] = useState(false);
   const [cookingIsChecked, setCookingIsChecked] = useState(false);
-
+  const [signedInUser, setSignedInUser] = useState("");
+  const dbRef = firebase.database().ref("Users");
+  const navigation = useNavigation();
   const onRequestHandle = () => {
-    return Alert.alert("bla bla", "Dummy message", [{ text: "ok" }]);
+    requestPush();
+    // navigation.navigate("SummaryScreen");
+  };
+
+  function formValidator() {
+    nameValidator();
+    emailValidator();
+  }
+  function nameValidator() {
+    if (!customerName) {
+      return setNameError("name field cannot be empty");
+    }
+  }
+
+  function emailValidator() {
+    if (!email) {
+      return setEmailError("email field cannot be empty");
+    }
+  }
+
+  const userLogCheck = () => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        setSignedInUser(user);
+      } else {
+        return null;
+      }
+    });
+  };
+
+  let cookingChoice = { cooking: { foodChoice: delicacy.trim() } };
+
+  const serviceChoice = () => {
+    if (cookingIsChecked === true) {
+      return cookingChoice;
+    } else if (servicesIsChecked === true) {
+      return `services`;
+    } else {
+      return null;
+    }
+  };
+
+  const requestPush = async () => {
+    try {
+      if (!customerName || !email || !phoneNumber) {
+        return Alert.alert("title", "fields cannot be empty", [
+          { title: "ok" },
+        ]);
+      } else {
+        await dbRef
+          .child(signedInUser.uid)
+          .child("userRequests")
+          .set({
+            name: customerName.trim(),
+            Email: email.trim(),
+            phoneNumber: phoneNumber.trim(),
+            Allergies: allergies.trim(),
+            address: location.trim(),
+            serviceChoice: serviceChoice(),
+          })
+          .then(() => {
+            navigation.navigate("SummaryScreen");
+          });
+      }
+    } catch (e) {
+      console.log(e.message);
+    }
   };
 
   const delicacySpec = () => {
@@ -40,6 +112,7 @@ const RequestForm = () => {
           inputStyle={styles.input}
           labelStyle={styles.label}
           value={delicacy}
+          errorStyle={styles.errorStyle}
           onChangeText={setDelicacy}
           multiline
           numberOfLines={3}
@@ -92,20 +165,19 @@ const RequestForm = () => {
   };
   return (
     <>
-      <ScrollView style={styles.scrollContainer}>
+      <ScrollView scrollEnabled={true} style={styles.scrollContainer}>
         {/*//TODO: add Input active and inactive indication  */}
-        <Text style={styles.formSubHeading}>
-          RELAX, LET US DO THE HARD-WORK FOR YOU...
-        </Text>
+
         <Input
-          label="First Name"
-          placeholder="  i.e. name given"
+          label="Name"
+          placeholder="  e.g. micheal smith"
           inputContainerStyle={{ borderBottomWidth: 0 }}
           inputStyle={styles.input}
-          inputContainerStyle={{ borderBottomWidth: 0 }}
-          labelStyle={styles.label}
-          value={firstName}
-          onChangeText={setFirstName}
+          labelStyle={[styles.label, { marginTop: 50 }]}
+          value={customerName}
+          onChangeText={setCustomerName}
+          errorMessage={nameError}
+          errorStyle={styles.errorStyle}
           // onFocus={() => setIsActive(true)}
           // onBlur={() => setIsActive(false)}
           // inputContainerStyle={{
@@ -121,29 +193,7 @@ const RequestForm = () => {
             />
           }
         />
-        <Input
-          label="Last Name"
-          placeholder="  i.e. surname"
-          inputContainerStyle={{ borderBottomWidth: 0 }}
-          inputStyle={styles.input}
-          labelStyle={styles.label}
-          value={lastName}
-          onChangeText={setLastName}
-          // onFocus={() => setIsActive(true)}
-          // onBlur={() => setIsActive(false)}
-          // inputContainerStyle={{
-          //   borderColor: isActive === true ? colors.radGreen : null,
-          // }}
-          leftIcon={
-            <Icon
-              type="material"
-              name="person"
-              size={21}
-              style={styles.iconStyle}
-              // color={isActive === true ? colors.radGreen : "black"}
-            />
-          }
-        />
+
         <Input
           label="Email"
           placeholder="  e.g. abc@mail.com"
@@ -151,7 +201,10 @@ const RequestForm = () => {
           inputStyle={styles.input}
           labelStyle={styles.label}
           value={email}
+          autoCompleteType="email"
           onChangeText={setEmail}
+          errorMessage={emailError}
+          errorStyle={styles.errorStyle}
           // onFocus={() => setIsActive(true)}
           // onBlur={() => setIsActive(false)}
           // inputContainerStyle={{
@@ -174,6 +227,8 @@ const RequestForm = () => {
           inputStyle={styles.input}
           labelStyle={styles.label}
           value={phoneNumber}
+          errorMessage={phoneError}
+          errorStyle={styles.errorStyle}
           onChangeText={setPhoneNumber}
           keyboardType="numeric"
           // onFocus={() => setIsActive(true)}
@@ -193,19 +248,15 @@ const RequestForm = () => {
         />
         <Input
           label="Allergies"
-          placeholder="  i.e. food allergies"
+          placeholder="  i.g. cassava allergy"
           multiline
-          numberOfLines={3}
+          numberOfLines={2}
           inputContainerStyle={{ borderBottomWidth: 0 }}
           inputStyle={styles.input}
           labelStyle={styles.label}
           value={allergies}
-          onChangeText={() => setAllergies}
-          // onFocus={() => setIsActive(true)}
-          // onBlur={() => setIsActive(false)}
-          // inputContainerStyle={{
-          //   borderColor: isActive === true ? colors.radGreen : "black",
-          // }}
+          errorStyle={styles.errorStyle}
+          onChangeText={setAllergies}
           leftIcon={
             <Icon
               type="font-awesome"
@@ -225,6 +276,7 @@ const RequestForm = () => {
           inputStyle={styles.input}
           placeholder="  i.e. home address/Landmark"
           value={location}
+          errorStyle={styles.errorStyle}
           onChangeText={setLocation}
           // onFocus={() => setIsActive(true)}
           // onBlur={() => setIsActive(false)}
@@ -257,8 +309,8 @@ const RequestForm = () => {
               onPress={() => setServicesIsChecked(!servicesIsChecked)}
               checkedColor={colors.radGreen}
               checkedTitle="services selected"
-              checked={servicesIsChecked}
               value={servicesValue}
+              checked={servicesIsChecked}
               onChangeText={() => setServicesValue("services")}
               containerStyle={styles.checkContainer}
             />
@@ -267,8 +319,8 @@ const RequestForm = () => {
               onPress={() => setCookingIsChecked(!cookingIsChecked)}
               checkedTitle="cooking selected"
               checkedColor={colors.radGreen}
-              checked={cookingIsChecked}
               value={cookingValue}
+              checked={cookingIsChecked}
               onChangeText={() => setCookingValue("cooking")}
               containerStyle={styles.checkContainer}
             />
@@ -290,6 +342,7 @@ const RequestForm = () => {
           style={styles.dividerIcon}
           color={colors.radOrange}
         />
+
         <DateAndTime />
 
         <Button
@@ -340,13 +393,7 @@ const styles = StyleSheet.create({
     height: "100%",
     backgroundColor: "white",
   },
-  formSubHeading: {
-    paddingBottom: 10,
-    paddingTop: 10,
-    alignSelf: "center",
-    fontSize: 16,
-    marginHorizontal: 8,
-  },
+
   label: {
     color: "#000000",
   },
@@ -372,6 +419,10 @@ const styles = StyleSheet.create({
   noticeText: {
     fontWeight: "700",
     fontStyle: "italic",
+  },
+  errorStyle: {
+    alignSelf: "flex-start",
+    marginLeft: 40,
   },
 });
 export default RequestForm;

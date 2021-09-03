@@ -16,13 +16,24 @@ import {
 } from "@react-navigation/drawer";
 import colors from "../configs/colors";
 import { DrawerActions } from "@react-navigation/native";
+import { useSelector, useDispatch } from "react-redux";
+import { currentUser } from "../store/actions";
 
 const CustomDrawerContent = ({ ...props }) => {
   useEffect(() => {
-    userLogCheck();
-  });
+    dispatchHandler();
+    return () => {
+      null;
+    };
+  }, []);
 
-  const [signedInUser, setSignedInUser] = useState("");
+  const currentUserEmail = useSelector((state) => state.email);
+  const dispatch = useDispatch();
+
+  const dispatchHandler = () => {
+    dispatch(currentUser());
+  };
+
   const closeAppDrawer = () => {
     props.navigation.dispatch(DrawerActions.closeDrawer());
   };
@@ -46,16 +57,6 @@ const CustomDrawerContent = ({ ...props }) => {
       console.log(e.message);
     }
   };
-
-  function userLogCheck() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        setSignedInUser(user);
-      } else {
-        null;
-      }
-    });
-  }
 
   return (
     <>
@@ -81,7 +82,7 @@ const CustomDrawerContent = ({ ...props }) => {
             size="xlarge"
             rounded
             source={{
-              uri: "https://cdn.dribbble.com/users/2419380/screenshots/6910552/baesisymotion_1080x1080_04.gif",
+              uri: "https://cdn.dribbble.com/users/3844750/screenshots/10729124/media/2523facfa3e436b8331c316dcc4998f2.jpg?compress=1&resize=800x600",
             }}
           >
             <Avatar.Accessory
@@ -90,7 +91,7 @@ const CustomDrawerContent = ({ ...props }) => {
               style={styles.avatarAccessory}
             />
           </Avatar>
-          {signedInUser ? <Text>{signedInUser.email}</Text> : null}
+          <Text>{currentUserEmail}</Text>
         </View>
         <View style={{ flex: 1, justifyContent: "space-between" }}>
           <View style={{ flex: 1 }}>

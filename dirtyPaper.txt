@@ -1,63 +1,50 @@
-// <View style={styles.container}>
-    //   <ScrollView style={{ flex: 1 }}>
-    //     <View style={{ flex: 1 }}>
-    //       <Banner
-    //         firstCaption="dummy Text"
-    //         description=" some description"
-    //         bannerImage={{
-    //           uri: "https://i.pinimg.com/564x/c7/dd/ac/c7ddac4d132b59ec59bbd0a81acbacfb.jpg",
-    //         }}
-    //       />
-    //     </View>
-    //     <View style={{ flex: 1 }}>
-    //       <Banner
-    //         firstCaption="dummy Text"
-    //         description=" some description"
-    //         buttonTitle="proceed.."
-    //         bannerImage={require("./../assets/soup.jpg")}
-    //       />
-    //     </View>
-    //     <View style={{ flex: 1, marginBottom: 1 }}>
-    //       <Banner
-    //         firstCaption="dummy Text"
-    //         description=" some description"
-    //         buttonTitle="contact us"
-    //         bannerImage={require("./../assets/ofadaSauce.jpg")}
-    //       />
-    //     </View>
-    //   </ScrollView>
-    // </View>
+import React, { useEffect } from "react";
+import "react-native-gesture-handler";
+import { LogBox } from "react-native";
+import RootStackNav from "./app/routes/RootStackNav";
+import firebase from "./app/configs/firebase/fireBaseConfig";
+//Redux store imports
+import { Provider } from "react-redux";
+import { store } from "./app/store/store";
+import AuthCheckScreen from "./app/screens/AuthCheckScreen";
+//silent logBox error
+LogBox.ignoreLogs(["Setting a timer for a long period of time"]);
+import HomeNav from "./app/routes/HomeNav";
+const App = () => {
+  // useEffect(() => {
+  //   authCheck();
+  //   return () => {
+  //     null;
+  //   };
+  // }, []);
+
+  // const authCheck = () => {
+  //   firebase.auth().onAuthStateChanged((user) => {
+  //     if (user) {
+  //       console.log(user.email);
+  //     } else {
+  //       null;
+  //     }
+  //   });
+  // };
+
+  {
+    /* <Provider store={store}>
+    <RootStackNav />
+  </Provider> */
+  }
+
+  return (
+    <>
+      <HomeNav />
+    </>
+  );
+};
+
+export default App;
 
 
 
 
 
 
-
-
-
-    <DrawerItem
-            icon={() => (
-              <Icon name="home-outline" type="material-community" size={25} />
-            )}
-            label="Home"
-            onPress={() => navigation.navigate("Home")}
-          />
-          <DrawerItem
-            icon={() => (
-              <Icon
-                name="information-outline"
-                type="material-community"
-                size={25}
-              />
-            )}
-            label="About"
-            onPress={() => navigation.navigate("About")}
-          />
-          <DrawerItem
-            icon={() => (
-              <Icon name="shopping-cart" type="font-awesome" size={20} />
-            )}
-            label="Request"
-            onPress={() => navigation.navigate("Request")}
-          />

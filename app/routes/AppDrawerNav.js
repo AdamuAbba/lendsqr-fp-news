@@ -1,25 +1,20 @@
-import React, { useState } from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import {
-  createDrawerNavigator,
-  DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
-} from "@react-navigation/drawer";
+import React from "react";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Icon } from "react-native-elements";
 import HomeScreen from "../screens/HomeScreen";
 import AboutUsScreen from "../screens/AboutUsScreen";
 import RequestServiceScreen from "../screens/RequestService";
-import RadDishLogo from "../components/RadDishLogo";
 import CustomDrawerContent from "../shared/CustomDrawerContent";
 import colors from "../configs/colors";
+import UserAvatar from "../components/UserAvatar";
+import HomeNav from "./HomeNav";
 const Drawer = createDrawerNavigator();
 
 const AppDrawerNav = () => {
   return (
     <>
       <Drawer.Navigator
-        initialRouteName="Home"
+        initialRouteName="HomeNav"
         drawerContent={(props) => <CustomDrawerContent {...props} />}
         drawerContentOptions={{
           activeBackgroundColor: colors.radOrange,
@@ -28,11 +23,13 @@ const AppDrawerNav = () => {
         }}
       >
         <Drawer.Screen
-          name="Home"
-          component={HomeScreen}
+          name="HomeNav"
+          component={HomeNav}
           options={{
+            title: "Home",
             headerShown: true,
-            headerRight: () => <RadDishLogo />,
+            headerRight: () => <UserAvatar />,
+            headerStyle: { height: "14%" },
             drawerIcon: ({ color, size }) => (
               <Icon
                 name="home-outline"
@@ -48,7 +45,7 @@ const AppDrawerNav = () => {
           component={AboutUsScreen}
           options={{
             headerShown: true,
-            headerRight: () => <RadDishLogo />,
+            headerRight: () => <UserAvatar />,
             drawerIcon: ({ color, size }) => (
               <Icon
                 name="information-outline"
@@ -64,7 +61,7 @@ const AppDrawerNav = () => {
           component={RequestServiceScreen}
           options={{
             headerShown: true,
-            headerRight: () => <RadDishLogo />,
+            headerRight: () => <UserAvatar />,
             drawerIcon: ({ color, size }) => (
               <Icon
                 name="shopping-cart"

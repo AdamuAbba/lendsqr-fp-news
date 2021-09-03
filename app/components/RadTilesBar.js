@@ -1,38 +1,54 @@
 import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
-import { Tile, Text } from "react-native-elements";
+import { Tile, Text, Icon } from "react-native-elements";
 import colors from "../configs/colors";
 const tileImage =
-  "https://www.localguidesconnect.com/t5/image/serverpage/image-id/466203i59D138816E0430B8/image-size/large?v=v2&px=999";
+  "https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80";
 
 const featuredImage =
   "https://www.africaglobalradio.com/wp-content/uploads/2020/05/food4.jpg";
+
+const contactImage =
+  "https://images.unsplash.com/photo-1551326844-4df70f78d0e9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=926&q=80";
 const RadTilesBar = () => {
   return (
     <>
       <View style={styles.container}>
-        <View style={{ marginBottom: 5 }}>
-          <Tile
-            imageSrc={{ uri: tileImage }}
-            title="Lorem ipsum dolor sit amet, consectetur"
-            contentContainerStyle={styles.tileContainer}
-            containerStyle={styles.theTileStyle}
-          >
-            <Text>some Text</Text>
-          </Tile>
-        </View>
+        <Tile
+          imageSrc={{ uri: tileImage }}
+          title="Lorem ipsum dolor sit amet, consectetur"
+          contentContainerStyle={styles.tileContainer}
+          containerStyle={styles.theTileStyle}
+          imageContainerStyle={styles.introTileImage}
+        >
+          <Text>some Text</Text>
+        </Tile>
 
-        <View style={{}}>
-          <Tile
-            imageSrc={{
-              uri: featuredImage,
-            }}
-            title="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores dolore exercitationem"
-            featured
-            caption="test Caption"
-            containerStyle={styles.featuredTileContainer}
-          />
-        </View>
+        <Tile
+          imageSrc={{
+            uri: featuredImage,
+          }}
+          title="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores dolore exercitationem"
+          featured
+          caption="test Caption"
+          containerStyle={styles.featuredTileContainer}
+        />
+
+        <Tile
+          imageSrc={{
+            uri: contactImage,
+          }}
+          title="contact us"
+          featured
+          icon={{
+            name: "arrow-circle-right",
+            type: "font-awesome",
+            size: 40,
+            color: colors.radGreen,
+          }}
+          caption="test Caption"
+          containerStyle={styles.contactContainer}
+        />
       </View>
     </>
   );
@@ -41,16 +57,38 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  contactUsTile: {
+    flex: 1,
+    marginTop: 7,
+    marginBottom: 7,
+    width: "95%",
+    alignItems: "center",
+  },
   tileContainer: {
     flex: 1,
-    backgroundColor: colors.radRed,
+    backgroundColor: colors.radOrange,
+    borderBottomRightRadius: 50,
+    marginBottom: 10,
   },
   featuredTileContainer: {
     flex: 1,
+    marginBottom: 4,
   },
   theTileStyle: {
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
+    width: "95%",
+    alignSelf: "center",
+    elevation: 7,
+  },
+
+  introTileImage: {
+    borderTopLeftRadius: 50,
+  },
+
+  contactContainer: {
+    flex: 1,
+    marginBottom: 7,
+    width: "100%",
+    alignSelf: "center",
   },
 });
 export default RadTilesBar;

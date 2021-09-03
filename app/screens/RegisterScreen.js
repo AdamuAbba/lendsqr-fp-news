@@ -1,13 +1,12 @@
 import React from "react";
 import { Text, Divider } from "react-native-elements";
 import { StyleSheet, ImageBackground, View, ScrollView } from "react-native";
-import Banner from "../components/Banner";
 import SignUpForm from "../components/SignUpForm";
 import { globalStyles } from "../configs/GlobalStyle";
 import colors from "../configs/colors";
 const image =
   "https://images.pexels.com/photos/361184/asparagus-steak-veal-steak-veal-361184.jpeg?cs=srgb&dl=pexels-pixabay-361184.jpg&fm=jpg";
-function RegisterScreen(props) {
+function RegisterScreen() {
   return (
     <ImageBackground style={styles.container} source={{ uri: image }}>
       <View style={globalStyles.bannerTextView}>
