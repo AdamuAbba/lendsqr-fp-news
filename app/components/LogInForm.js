@@ -12,14 +12,11 @@ const LogInForm = () => {
   const [error, setError] = useState("");
 
   const signIn = () => {
-    try {
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(email, password)
-        .then(() => navigation.navigate("AppDrawerNav"));
-    } catch (e) {
-      setError(e.message);
-    }
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(() => navigation.navigate("AppDrawerNav"))
+      .catch((err) => setError(err.toString()));
   };
   return (
     <>

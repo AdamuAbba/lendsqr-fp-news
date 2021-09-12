@@ -14,12 +14,23 @@ const AppDrawerNav = () => {
   return (
     <>
       <Drawer.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: "#1f1f1f",
+          },
+          headerTitleStyle: { fontFamily: "AbrilFatface-Regular" },
+          headerTintColor: "#fff",
+        }}
         initialRouteName="HomeNav"
         drawerContent={(props) => <CustomDrawerContent {...props} />}
         drawerContentOptions={{
           activeBackgroundColor: colors.radOrange,
+          labelStyle: {
+            fontFamily: "AbrilFatface-Regular",
+            fontSize: 19,
+          },
           activeTintColor: "#fff",
-          inactiveTintColor: "#000",
+          inactiveTintColor: colors.radOrange,
         }}
       >
         <Drawer.Screen
@@ -29,7 +40,6 @@ const AppDrawerNav = () => {
             title: "Home",
             headerShown: true,
             headerRight: () => <UserAvatar />,
-            headerStyle: { height: "14%" },
             drawerIcon: ({ color, size }) => (
               <Icon
                 name="home-outline"
@@ -44,7 +54,7 @@ const AppDrawerNav = () => {
           name="About"
           component={AboutUsScreen}
           options={{
-            headerShown: true,
+            headerShown: false,
             headerRight: () => <UserAvatar />,
             drawerIcon: ({ color, size }) => (
               <Icon

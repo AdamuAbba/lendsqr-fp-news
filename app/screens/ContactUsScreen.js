@@ -1,10 +1,11 @@
 import React from "react";
 import { View, Text } from "react-native";
+import RadishMotto from "../shared/RadishMotto";
 
 const ContactUsScreen = () => {
   return (
     <View>
-      <Text>contact us</Text>
+      <RadishMotto />
     </View>
   );
 };

@@ -1,10 +1,11 @@
 import React from "react";
-import { Text, Button, Icon } from "react-native-elements";
+import { Button, Icon } from "react-native-elements";
 import {
   View,
   StyleSheet,
   Platform,
   StatusBar,
+  Text,
   ScrollView,
 } from "react-native";
 import { globalStyles } from "../configs/GlobalStyle";
@@ -15,25 +16,34 @@ import colors from "../configs/colors";
 const RadishMotto = () => {
   return (
     <>
-      <View style={styles.container}>
-        <View style={styles.mainView}>
-          <View style={styles.firstView}>
-            <LottieView
-              style={styles.lottieStyle}
-              autoPlay
-              source={require("../assets/loadingFood.json")}
-            />
-            <Text style={[globalStyles.globalTitleFont]}>food & more</Text>
-          </View>
+      <View style={{ backgroundColor: "#1f1f1f", height: 110 }}>
+        <View style={[styles.container]}>
+          <View style={styles.mainView}>
+            <View style={styles.firstView}>
+              <LottieView
+                style={styles.lottieStyle}
+                autoPlay
+                source={require("../assets/loadingFood.json")}
+              />
+              <Text style={[globalStyles.globalTitleFont, { color: "white" }]}>
+                food & more
+              </Text>
+            </View>
 
-          <View style={{ height: 20 }}>
-            <Text h5 style={{ fontStyle: "italic" }}>
-              and more what?...join us and find out
-            </Text>
-          </View>
+            <View style={{ height: 20 }}>
+              <Text
+                style={{
+                  color: "white",
+                  fontFamily: "AbrilFatface-Regular",
+                }}
+              >
+                and more what?...join us and find out
+              </Text>
+            </View>
 
-          <View style={styles.logo}>
-            <RadDishLogo />
+            <View style={styles.logo}>
+              <RadDishLogo />
+            </View>
           </View>
         </View>
       </View>

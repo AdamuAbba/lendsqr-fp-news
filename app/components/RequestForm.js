@@ -1,5 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, ScrollView, Alert } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Alert,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Animated,
+  Easing,
+} from "react-native";
 import { Input, Divider, Button, CheckBox, Icon } from "react-native-elements";
 import { globalStyles } from "../configs/GlobalStyle";
 import RadDishBanner from "./RadDishBanner";
@@ -7,6 +17,7 @@ import colors from "../configs/colors";
 import DateAndTime from "./DateAndTime";
 import { useNavigation } from "@react-navigation/native";
 import firebase from "../configs/firebase/fireBaseConfig";
+
 const RequestForm = () => {
   useEffect(() => {
     userLogCheck();
@@ -32,26 +43,11 @@ const RequestForm = () => {
   const [signedInUser, setSignedInUser] = useState("");
   const dbRef = firebase.database().ref("Users");
   const navigation = useNavigation();
+  const iconColor = colors.radOrange;
   const onRequestHandle = () => {
     requestPush();
     // navigation.navigate("SummaryScreen");
   };
-
-  function formValidator() {
-    nameValidator();
-    emailValidator();
-  }
-  function nameValidator() {
-    if (!customerName) {
-      return setNameError("name field cannot be empty");
-    }
-  }
-
-  function emailValidator() {
-    if (!email) {
-      return setEmailError("email field cannot be empty");
-    }
-  }
 
   const userLogCheck = () => {
     firebase.auth().onAuthStateChanged((user) => {
@@ -61,6 +57,17 @@ const RequestForm = () => {
         return null;
       }
     });
+  };
+
+  //?animations section
+  const initialValue = useRef(new Animated.Value(0)).current;
+  const animationTrigger = () => {
+    Animated.timing(initialValue, {
+      toValue: 100,
+      duration: 1000,
+      easing: Easing.bounce,
+      useNativeDriver: true,
+    }).start();
   };
 
   let cookingChoice = { cooking: { foodChoice: delicacy.trim() } };
@@ -104,34 +111,50 @@ const RequestForm = () => {
 
   const delicacySpec = () => {
     if (cookingIsChecked) {
+      animationTrigger();
+
       return (
-        <Input
-          label="Delicacy"
-          placeholder="  i.g. pounded yam and afam soup"
-          inputContainerStyle={{ borderBottomWidth: 0 }}
-          inputStyle={styles.input}
-          labelStyle={styles.label}
-          value={delicacy}
-          errorStyle={styles.errorStyle}
-          onChangeText={setDelicacy}
-          multiline
-          numberOfLines={3}
-          // onFocus={() => setIsActive(true)}
-          // onBlur={() => setIsActive(false)}
-          // inputContainerStyle={{
-          //   borderColor: isActive === true ? colors.radGreen : null,
-          // }}
-          leftIcon={
-            <Icon
-              type="material"
-              name="restaurant"
-              size={21}
-              color={colors.radGreen}
-              style={styles.iconStyle}
-              // color={isActive === true ? colors.radGreen : "black"}
-            />
-          }
-        />
+        <Animated.View
+          style={{
+            transform: [
+              {
+                translateY: initialValue.interpolate({
+                  inputRange: [0, 100],
+                  outputRange: [90, 0],
+                }),
+              },
+            ],
+          }}
+        >
+          <Input
+            label="Delicacy"
+            placeholder="  i.g. pounded yam and afam soup"
+            inputContainerStyle={{ borderBottomWidth: 0 }}
+            inputStyle={styles.input}
+            labelStyle={styles.label}
+            value={delicacy}
+            errorStyle={styles.errorStyle}
+            onChangeText={setDelicacy}
+            multiline
+            numberOfLines={3}
+            // onFocus={() => setIsActive(true)}
+            // onBlur={() => setIsActive(false)}
+            // inputContainerStyle={{
+            //   borderColor: isActive === true ? colors.radGreen : null,
+            // }}
+            leftIcon={
+              <Icon
+                type="material"
+                name="restaurant"
+                size={21}
+                color={colors.radGreen}
+                style={styles.iconStyle}
+                color={iconColor}
+                // color={isActive === true ? colors.radGreen : "black"}
+              />
+            }
+          />
+        </Animated.View>
       );
     }
   };
@@ -143,17 +166,47 @@ const RequestForm = () => {
         </View>
       );
     } else if (servicesIsChecked) {
+      animationTrigger();
       return (
-        <Text style={styles.noticeText}>
+        <Animated.Text
+          style={[
+            styles.noticeText,
+            {
+              transform: [
+                {
+                  translateX: initialValue.interpolate({
+                    inputRange: [0, 100],
+                    outputRange: [90, 0],
+                  }),
+                },
+              ],
+            },
+          ]}
+        >
           Our Service team will contact you shortly after submission...
-        </Text>
+        </Animated.Text>
       );
     } else if (cookingIsChecked) {
+      animationTrigger();
       return (
-        <Text style={styles.noticeText}>
+        <Animated.Text
+          style={[
+            styles.noticeText,
+            {
+              transform: [
+                {
+                  translateX: initialValue.interpolate({
+                    inputRange: [0, 100],
+                    outputRange: [90, 0],
+                  }),
+                },
+              ],
+            },
+          ]}
+        >
           Specify a delicacy below and we will send you our best chef for that
           delicacy...
-        </Text>
+        </Animated.Text>
       );
     } else if (servicesIsChecked && cookingIsChecked) {
       return (
@@ -165,197 +218,192 @@ const RequestForm = () => {
   };
   return (
     <>
-      <ScrollView scrollEnabled={true} style={styles.scrollContainer}>
-        {/*//TODO: add Input active and inactive indication  */}
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <ScrollView scrollEnabled={true} style={styles.scrollContainer}>
+          {/*//TODO: add Input active and inactive indication  */}
 
-        <Input
-          label="Name"
-          placeholder="  e.g. micheal smith"
-          inputContainerStyle={{ borderBottomWidth: 0 }}
-          inputStyle={styles.input}
-          labelStyle={[styles.label, { marginTop: 50 }]}
-          value={customerName}
-          onChangeText={setCustomerName}
-          errorMessage={nameError}
-          errorStyle={styles.errorStyle}
-          // onFocus={() => setIsActive(true)}
-          // onBlur={() => setIsActive(false)}
-          // inputContainerStyle={{
-          //   borderColor: isActive === true ? colors.radGreen : "black",
-          // }}
-          leftIcon={
-            <Icon
-              type="material"
-              name="person"
-              size={20}
-              style={styles.iconStyle}
-              // color={isActive === true ? colors.radGreen : "black"}
-            />
-          }
-        />
+          <Input
+            label="Name"
+            placeholder="  e.g. micheal smith"
+            inputContainerStyle={{ borderBottomWidth: 0 }}
+            inputStyle={styles.input}
+            labelStyle={[styles.label, { marginTop: 50 }]}
+            value={customerName}
+            onChangeText={setCustomerName}
+            errorMessage={nameError}
+            errorStyle={styles.errorStyle}
+            leftIcon={
+              <Icon
+                type="material"
+                name="person"
+                size={20}
+                style={styles.iconStyle}
+                color={iconColor}
+                // color={isActive === true ? colors.radGreen : "black"}
+              />
+            }
+          />
 
-        <Input
-          label="Email"
-          placeholder="  e.g. abc@mail.com"
-          inputContainerStyle={{ borderBottomWidth: 0 }}
-          inputStyle={styles.input}
-          labelStyle={styles.label}
-          value={email}
-          autoCompleteType="email"
-          onChangeText={setEmail}
-          errorMessage={emailError}
-          errorStyle={styles.errorStyle}
-          // onFocus={() => setIsActive(true)}
-          // onBlur={() => setIsActive(false)}
-          // inputContainerStyle={{
-          //   borderColor: isActive === true ? colors.radGreen : null,
-          // }}
-          leftIcon={
-            <Icon
-              type="material"
-              name="email"
-              size={23}
-              style={styles.iconStyle}
-              // color={isActive === true ? colors.radGreen : "black"}
-            />
-          }
-        />
-        <Input
-          label="Phone Number"
-          placeholder="  e.g. +234..."
-          inputContainerStyle={{ borderBottomWidth: 0 }}
-          inputStyle={styles.input}
-          labelStyle={styles.label}
-          value={phoneNumber}
-          errorMessage={phoneError}
-          errorStyle={styles.errorStyle}
-          onChangeText={setPhoneNumber}
-          keyboardType="numeric"
-          // onFocus={() => setIsActive(true)}
-          // onBlur={() => setIsActive(false)}
-          // inputContainerStyle={{
-          //   borderColor: isActive === true ? colors.radGreen : "black",
-          // }}
-          leftIcon={
-            <Icon
-              type="font-awesome"
-              name="mobile"
-              size={30}
-              style={styles.iconStyle}
-              // color={isActive === true ? colors.radGreen : "black"}
-            />
-          }
-        />
-        <Input
-          label="Allergies"
-          placeholder="  i.g. cassava allergy"
-          multiline
-          numberOfLines={2}
-          inputContainerStyle={{ borderBottomWidth: 0 }}
-          inputStyle={styles.input}
-          labelStyle={styles.label}
-          value={allergies}
-          errorStyle={styles.errorStyle}
-          onChangeText={setAllergies}
-          leftIcon={
-            <Icon
-              type="font-awesome"
-              name="stethoscope"
-              size={25}
-              style={styles.iconStyle}
-              // color={isActive === true ? colors.radGreen : "black"}
-            />
-          }
-        />
-        <Input
-          label="Service Location"
-          labelStyle={styles.label}
-          multiline
-          numberOfLines={3}
-          inputContainerStyle={{ borderBottomWidth: 0 }}
-          inputStyle={styles.input}
-          placeholder="  i.e. home address/Landmark"
-          value={location}
-          errorStyle={styles.errorStyle}
-          onChangeText={setLocation}
-          // onFocus={() => setIsActive(true)}
-          // onBlur={() => setIsActive(false)}
-          // inputContainerStyle={{
-          //   borderColor: isActive === true ? colors.radGreen : "black",
-          // }}
-          leftIcon={
-            <Icon
-              type="material"
-              name="place"
-              size={20}
-              style={styles.iconStyle}
-
-              // color={isActive === true ? colors.radGreen : "black"}
-            />
-          }
-        />
-        <Divider
-          orientation="horizontal"
-          subHeader="Service Requirement (please tick an option)"
-          subHeaderStyle={styles.dividerText}
-          width={10}
-          style={styles.dividerIcon}
-          color={colors.radOrange}
-        />
-        <View style={styles.checkGroup}>
-          <View style={{ flex: 1 }}>
-            <CheckBox
-              title="services"
-              onPress={() => setServicesIsChecked(!servicesIsChecked)}
-              checkedColor={colors.radGreen}
-              checkedTitle="services selected"
-              value={servicesValue}
-              checked={servicesIsChecked}
-              onChangeText={() => setServicesValue("services")}
-              containerStyle={styles.checkContainer}
-            />
-            <CheckBox
-              title="cooking"
-              onPress={() => setCookingIsChecked(!cookingIsChecked)}
-              checkedTitle="cooking selected"
-              checkedColor={colors.radGreen}
-              value={cookingValue}
-              checked={cookingIsChecked}
-              onChangeText={() => setCookingValue("cooking")}
-              containerStyle={styles.checkContainer}
-            />
-          </View>
+          <Input
+            label="Email"
+            placeholder="  e.g. abc@mail.com"
+            inputContainerStyle={{ borderBottomWidth: 0 }}
+            inputStyle={styles.input}
+            labelStyle={styles.label}
+            value={email}
+            autoCompleteType="email"
+            onChangeText={setEmail}
+            errorMessage={emailError}
+            errorStyle={styles.errorStyle}
+            // onFocus={() => setIsActive(true)}
+            // onBlur={() => setIsActive(false)}
+            // inputContainerStyle={{
+            //   borderColor: isActive === true ? colors.radGreen : null,
+            // }}
+            leftIcon={
+              <Icon
+                type="material"
+                name="email"
+                size={23}
+                style={styles.iconStyle}
+                color={iconColor}
+                // color={isActive === true ? colors.radGreen : "black"}
+              />
+            }
+          />
+          <Input
+            label="Phone Number"
+            placeholder="  e.g. +234..."
+            inputContainerStyle={{ borderBottomWidth: 0 }}
+            inputStyle={styles.input}
+            labelStyle={styles.label}
+            value={phoneNumber}
+            errorMessage={phoneError}
+            errorStyle={styles.errorStyle}
+            onChangeText={setPhoneNumber}
+            keyboardType="numeric"
+            leftIcon={
+              <Icon
+                type="font-awesome"
+                name="mobile"
+                size={30}
+                style={styles.iconStyle}
+                color={iconColor}
+                // color={isActive === true ? colors.radGreen : "black"}
+              />
+            }
+          />
+          <Input
+            label="Allergies"
+            placeholder="  i.g. cassava allergy"
+            multiline
+            numberOfLines={2}
+            inputContainerStyle={{ borderBottomWidth: 0 }}
+            inputStyle={styles.input}
+            labelStyle={styles.label}
+            value={allergies}
+            errorStyle={styles.errorStyle}
+            onChangeText={setAllergies}
+            leftIcon={
+              <Icon
+                type="font-awesome"
+                name="stethoscope"
+                size={25}
+                style={styles.iconStyle}
+                color={iconColor}
+                // color={isActive === true ? colors.radGreen : "black"}
+              />
+            }
+          />
+          <Input
+            label="Service Location"
+            labelStyle={styles.label}
+            multiline
+            numberOfLines={3}
+            inputContainerStyle={{ borderBottomWidth: 0 }}
+            inputStyle={styles.input}
+            placeholder="  i.e. home address/Landmark"
+            value={location}
+            errorStyle={styles.errorStyle}
+            onChangeText={setLocation}
+            // onFocus={() => setIsActive(true)}
+            // onBlur={() => setIsActive(false)}
+            // inputContainerStyle={{
+            //   borderColor: isActive === true ? colors.radGreen : "black",
+            // }}
+            leftIcon={
+              <Icon
+                type="material"
+                name="place"
+                size={20}
+                style={styles.iconStyle}
+                color={iconColor}
+                // color={isActive === true ? colors.radGreen : "black"}
+              />
+            }
+          />
           <Divider
-            orientation="vertical"
-            width={8}
-            style={styles.noticeDivider}
+            orientation="horizontal"
+            subHeader="Service Requirement (please tick an option)"
+            subHeaderStyle={styles.dividerText}
+            width={10}
+            style={styles.dividerIcon}
+          />
+          <View style={styles.checkGroup}>
+            <View style={{ flex: 1 }}>
+              <CheckBox
+                title="services"
+                onPress={() => setServicesIsChecked(!servicesIsChecked)}
+                checkedColor={colors.radGreen}
+                checkedTitle="services selected"
+                value={servicesValue}
+                checked={servicesIsChecked}
+                onChangeText={() => setServicesValue("services")}
+                containerStyle={styles.checkContainer}
+              />
+              <CheckBox
+                title="cooking"
+                onPress={() => setCookingIsChecked(!cookingIsChecked)}
+                checkedTitle="cooking selected"
+                checkedColor={colors.radGreen}
+                value={cookingValue}
+                checked={cookingIsChecked}
+                onChangeText={() => setCookingValue("cooking")}
+                containerStyle={styles.checkContainer}
+              />
+            </View>
+            <Divider
+              orientation="vertical"
+              width={8}
+              style={styles.noticeDivider}
+              color={colors.radOrange}
+            />
+            <View style={{ flex: 1, marginRight: 10 }}>{checkNotice()}</View>
+          </View>
+          {delicacySpec()}
+          <Divider
+            orientation="horizontal"
+            subHeader="pick a preferred Date and Time"
+            subHeaderStyle={styles.dividerText}
+            width={10}
+            style={styles.dividerIcon}
             color={colors.radOrange}
           />
-          <View style={{ flex: 1, marginRight: 10 }}>{checkNotice()}</View>
-        </View>
-        {delicacySpec()}
-        <Divider
-          orientation="horizontal"
-          subHeader="pick a preferred Date and Time"
-          subHeaderStyle={styles.dividerText}
-          width={10}
-          style={styles.dividerIcon}
-          color={colors.radOrange}
-        />
 
-        <DateAndTime />
+          <DateAndTime />
 
-        <Button
-          title="Request"
-          type="solid"
-          onPress={() => onRequestHandle()}
-          buttonStyle={globalStyles.buttonConfig}
-          containerStyle={[
-            globalStyles.button,
-            { marginBottom: 20, marginTop: 20 },
-          ]}
-        />
-      </ScrollView>
+          <Button
+            title="Request"
+            type="solid"
+            onPress={() => onRequestHandle()}
+            buttonStyle={globalStyles.buttonConfig}
+            containerStyle={[
+              globalStyles.button,
+              { marginBottom: 20, marginTop: 20 },
+            ]}
+          />
+        </ScrollView>
+      </TouchableWithoutFeedback>
     </>
   );
 };
@@ -365,6 +413,7 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
     fontWeight: "bold",
   },
+
   dividerIcon: {
     borderRadius: 10,
     width: "90%",
@@ -381,6 +430,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     alignSelf: "center",
     marginTop: 10,
+    color: colors.radWhite,
+    fontFamily: "AbrilFatface-Regular",
   },
   iconStyle: {
     marginRight: 10,
@@ -391,17 +442,20 @@ const styles = StyleSheet.create({
   scrollContainer: {
     width: "100%",
     height: "100%",
-    backgroundColor: "white",
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+    backgroundColor: colors.radBlack,
   },
 
   label: {
-    color: "#000000",
+    color: colors.radWhite,
+    fontFamily: "AbrilFatface-Regular",
   },
   input: {
     borderColor: colors.radOrange,
     borderWidth: 2,
     borderRadius: 15,
-    backgroundColor: "#cbced4",
+    backgroundColor: colors.radWhite,
     elevation: 6,
   },
   checkContainer: {
@@ -419,10 +473,13 @@ const styles = StyleSheet.create({
   noticeText: {
     fontWeight: "700",
     fontStyle: "italic",
+    color: colors.radWhite,
+    fontFamily: "AbrilFatface-Regular",
   },
   errorStyle: {
     alignSelf: "flex-start",
     marginLeft: 40,
+    fontFamily: "AbrilFatface-Regular",
   },
 });
 export default RequestForm;

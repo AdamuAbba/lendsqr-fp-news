@@ -3,7 +3,7 @@ import { View, StyleSheet, ScrollView } from "react-native";
 import { Tile, Text, Icon } from "react-native-elements";
 import colors from "../configs/colors";
 const tileImage =
-  "https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80";
+  "https://images.unsplash.com/photo-1558818498-28c1e002b655?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80";
 
 const featuredImage =
   "https://www.africaglobalradio.com/wp-content/uploads/2020/05/food4.jpg";
@@ -17,11 +17,12 @@ const RadTilesBar = () => {
         <Tile
           imageSrc={{ uri: tileImage }}
           title="Lorem ipsum dolor sit amet, consectetur"
+          titleStyle={styles.title}
           contentContainerStyle={styles.tileContainer}
           containerStyle={styles.theTileStyle}
           imageContainerStyle={styles.introTileImage}
         >
-          <Text>some Text</Text>
+          <Text style={styles.title}>some Text</Text>
         </Tile>
 
         <Tile
@@ -31,6 +32,7 @@ const RadTilesBar = () => {
           title="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores dolore exercitationem"
           featured
           caption="test Caption"
+          captionStyle={{ fontFamily: "AbrilFatface-Regular" }}
           containerStyle={styles.featuredTileContainer}
         />
 
@@ -47,6 +49,7 @@ const RadTilesBar = () => {
             color: colors.radGreen,
           }}
           caption="test Caption"
+          captionStyle={{ fontFamily: "AbrilFatface-Regular" }}
           containerStyle={styles.contactContainer}
         />
       </View>
@@ -56,6 +59,10 @@ const RadTilesBar = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginBottom: 170,
+  },
+  title: {
+    fontFamily: "AbrilFatface-Regular",
   },
   contactUsTile: {
     flex: 1,

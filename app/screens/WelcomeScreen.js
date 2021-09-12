@@ -5,6 +5,7 @@ import { globalStyles } from "../configs/GlobalStyle";
 import firebase from "../configs/firebase/fireBaseConfig";
 import RadDishLogo from "../components/RadDishLogo";
 import colors from "../configs/colors";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
 const image =
   "https://images.pexels.com/photos/1624487/pexels-photo-1624487.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260";
@@ -24,37 +25,36 @@ const WelcomeScreen = ({ navigation }) => {
         <ImageBackground style={styles.image} source={{ uri: image }}>
           <View style={styles.firstView}>
             <Text style={styles.welcomeTitle}>Food & More</Text>
-            <Text style={styles.greeting}>WELCOME</Text>
+            {/* //todo add boiling plat lottie to welcome*/}
+            <Text style={styles.greeting}>Welcome</Text>
             <View style={{ marginBottom: 8 }}>
               <RadDishLogo />
             </View>
             <View style={styles.buttonView}>
               <Button
-                type="outline"
+                type="solid"
                 title="Register"
-                titleStyle={{ color: colors.radGreen }}
-                buttonStyle={styles.buttonConfig}
+                raised
+                buttonStyle={{ backgroundColor: colors.radGreen }}
+                titleStyle={{
+                  fontFamily: "AbrilFatface-Regular",
+                }}
                 onPress={() => navigation.navigate("REGISTER")}
                 containerStyle={[styles.button, { marginRight: 10 }]}
               />
 
               <Button
-                type="outline"
+                type="solid"
+                raised
                 title="Login"
-                titleStyle={{ color: colors.radGreen }}
-                buttonStyle={styles.buttonConfig}
+                buttonStyle={{ backgroundColor: colors.radGreen }}
+                titleStyle={{
+                  fontFamily: "AbrilFatface-Regular",
+                }}
                 onPress={() => navigation.navigate("LOGIN")}
                 containerStyle={styles.button}
               />
             </View>
-          </View>
-          {/* <View style={styles.banner}>
-            <RadDishBanner />
-          </View> */}
-          <View style={styles.secondView}>
-            <Text style={styles.text}>
-              easy and stress-free online catering solution
-            </Text>
           </View>
         </ImageBackground>
       </View>
@@ -63,14 +63,10 @@ const WelcomeScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  buttonConfig: {
-    backgroundColor: "#ffff",
-    borderColor: colors.radGreen,
-  },
   welcomeTitle: {
     color: "#fff",
     fontSize: 20,
-    fontWeight: "bold",
+    fontFamily: "AbrilFatface-Regular",
   },
   container: {
     flex: 1,
@@ -91,12 +87,7 @@ const styles = StyleSheet.create({
   greeting: {
     fontSize: 50,
     color: colors.radRed,
-  },
-  text: {
-    color: "#fff",
-    fontStyle: "italic",
-    fontSize: 20,
-    fontWeight: "bold",
+    fontFamily: "AbrilFatface-Regular",
   },
   buttonView: {
     flexDirection: "row",
@@ -107,15 +98,11 @@ const styles = StyleSheet.create({
     width: "32%",
     elevation: 10,
   },
-  secondView: {
-    flex: 1,
-    position: "absolute",
-    bottom: 20,
-  },
+
   greetingTwo: {
     fontSize: 30,
     color: "white",
-    fontWeight: "bold",
+    fontFamily: "AbrilFatface-Regular",
   },
   banner: {
     position: "absolute",

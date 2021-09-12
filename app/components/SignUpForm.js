@@ -4,29 +4,11 @@ import { Input, Button, Text, SocialIcon, Icon } from "react-native-elements";
 import firebase from "../configs/firebase/fireBaseConfig";
 import { globalStyles } from "../configs/GlobalStyle";
 const SignUpForm = ({ navigation }) => {
-  useEffect(() => {
-    userLogCheck();
-    return () => {
-      null;
-    };
-  });
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [signedInUser, setSignedInUser] = useState("");
-
-  const dbRef = firebase.database().ref();
-
-  function userLogCheck() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        setSignedInUser(user);
-      } else {
-        null;
-      }
-    });
-  }
 
   const signUp = async () => {
     try {

@@ -7,10 +7,10 @@ export const globalStyles = StyleSheet.create({
     width: "100%",
   },
   globalTitleFont: {
-    fontWeight: "bold",
     fontSize: 30,
-    color: "#000",
+    color: colors.radWhite,
     letterSpacing: 3,
+    fontFamily: "AbrilFatface-Regular",
   },
   buttonConfig: {
     backgroundColor: colors.radGreen,
@@ -25,7 +25,7 @@ export const globalStyles = StyleSheet.create({
     borderColor: colors.radOrange,
     borderWidth: 2,
     borderRadius: 15,
-    backgroundColor: "#cbced4",
+    backgroundColor: colors.radWhite,
     elevation: 6,
   },
   label: {
