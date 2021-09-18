@@ -1,8 +1,17 @@
-import React, { useState } from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
-import { Input, Button, Text, SocialIcon, Icon } from "react-native-elements";
+import React, { useEffect, useState } from "react";
+import { View, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import {
+  Input,
+  Button,
+  Text,
+  SocialIcon,
+  Icon,
+  Chip,
+} from "react-native-elements";
 import firebase from "../configs/firebase/fireBaseConfig";
 import { globalStyles } from "../configs/GlobalStyle";
+import { View as MotiView, Text as MotiText, motify } from "moti";
+import colors from "../configs/colors";
 import { useNavigation } from "@react-navigation/native";
 
 const LogInForm = () => {
@@ -11,94 +20,147 @@ const LogInForm = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const signIn = () => {
-    firebase
+  const signIn = async () => {
+    await firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => navigation.navigate("AppDrawerNav"))
-      .catch((err) => setError(err.toString()));
+      .catch((err) => setError(err.message));
   };
   return (
     <>
-      <Input
-        label="Email"
-        placeholder="  e.g. abc@mail.com"
-        inputContainerStyle={{ borderBottomWidth: 0 }}
-        inputStyle={globalStyles.input}
-        labelStyle={globalStyles.label}
-        value={email}
-        onChangeText={setEmail}
-        leftIcon={
-          <Icon
-            type="material"
-            name="email"
-            size={23}
-            style={styles.iconStyle}
-            // color={isActive === true ? colors.radGreen : "black"}
-          />
-        }
-      />
-      <Input
-        label="Password"
-        placeholder="  e.g. abc@mail.com"
-        inputContainerStyle={{ borderBottomWidth: 0 }}
-        inputStyle={globalStyles.input}
-        labelStyle={globalStyles.label}
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry={true}
-        leftIcon={
-          <Icon
-            name="lock"
-            type="material"
-            size={23}
-            style={styles.iconStyle}
-            // color={isActive === true ? colors.radGreen : "black"}
-          />
-        }
-      />
-      {error ? <Text style={styles.errorText}>{error}</Text> : null}
-      <Button
-        title="Log in"
-        type="solid"
-        buttonStyle={globalStyles.buttonConfig}
-        containerStyle={globalStyles.button}
-        raised={true}
-        onPress={() => signIn()}
-      />
-      <TouchableOpacity
-        style={styles.forgotView}
-        onPress={() => navigation.navigate("AppDrawerNav")}
-      >
-        <Text style={styles.forgotText}>forgot Password ?</Text>
-      </TouchableOpacity>
-      <View style={styles.icon}>
-        <SocialIcon type="facebook" iconSize={15} style={styles.iconConfig} />
-        <SocialIcon type="twitter" iconSize={15} style={styles.iconConfig} />
-        <SocialIcon type="instagram" iconSize={15} style={styles.iconConfig} />
+      <View style={styles.container}>
+        <View
+          style={{
+            borderBottomColor: colors.radOrange,
+            borderBottomWidth: 3,
+            paddingBottom: 17,
+            elevation: 10,
+          }}
+        >
+          <Text style={styles.formHeader}>welcome back</Text>
+        </View>
+        <ScrollView scrollEnabled>
+          <MotiView
+            from={{ translateX: 100, opacity: 0 }}
+            transition={{ type: "spring", delay: 600, duration: 1000 }}
+            animate={{ translateX: 0, opacity: 1 }}
+            style={{ marginTop: 10 }}
+          >
+            <Input
+              placeholder="email@domain.com"
+              textContentType="emailAddress"
+              inputContainerStyle={{ borderBottomWidth: 0 }}
+              inputStyle={globalStyles.input}
+              labelStyle={globalStyles.label}
+              value={email}
+              onChangeText={setEmail}
+              leftIcon={
+                <Icon
+                  type="material"
+                  name="email"
+                  size={23}
+                  color={colors.radOrange}
+                />
+              }
+            />
+          </MotiView>
+          <MotiView
+            from={{ translateX: 100, opacity: 0 }}
+            transition={{ type: "spring", delay: 700, duration: 1000 }}
+            animate={{ translateX: 0, opacity: 1 }}
+          >
+            <Input
+              placeholder="  ***"
+              textContentType="password"
+              inputContainerStyle={{ borderBottomWidth: 0 }}
+              inputStyle={globalStyles.input}
+              labelStyle={globalStyles.label}
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry={true}
+              leftIcon={
+                <Icon
+                  name="lock"
+                  type="material"
+                  size={23}
+                  color={colors.radOrange} // color={isActive === true ? colors.radGreen : "black"}
+                />
+              }
+            />
+          </MotiView>
+          {error ? <Text style={styles.errorText}>{error}</Text> : null}
+
+          <MotiView
+            from={{ translateX: 100, opacity: 0 }}
+            transition={{ type: "spring", delay: 800, duration: 1000 }}
+            animate={{ translateX: 0, opacity: 1 }}
+          >
+            <TouchableOpacity
+              style={styles.forgotView}
+              onPress={() => navigation.navigate("LOGIN")}
+            >
+              <Text style={styles.forgotText}>forgot Password ?</Text>
+            </TouchableOpacity>
+            <Chip
+              title="login"
+              type="solid"
+              titleStyle={globalStyles.buttonTitle}
+              buttonStyle={{ backgroundColor: colors.radOrange }}
+              containerStyle={styles.button}
+              onPress={() => signIn()}
+            />
+          </MotiView>
+        </ScrollView>
       </View>
     </>
   );
 };
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: colors.radBlack,
+    borderTopRightRadius: 30,
+    borderTopLeftRadius: 30,
+    flex: 1,
+    width: "98%",
+    alignSelf: "center",
+  },
+  button: {
+    width: "50%",
+    alignSelf: "center",
+    marginBottom: 20,
+  },
+  formHeader: {
+    color: colors.radWhite,
+    alignSelf: "center",
+    fontSize: 20,
+    fontFamily: "AbrilFatface-Regular",
+    textShadowColor: "#000",
+    textShadowOffset: { width: 0.5, height: 0.5 },
+    textShadowRadius: 1,
+  },
   icon: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: 3,
+    marginTop: 3,
   },
   forgotView: {
     alignSelf: "center",
-    paddingTop: 5,
+    marginBottom: 10,
   },
   forgotText: {
-    fontWeight: "bold",
-    color: "red",
+    color: colors.radWhite,
+    fontFamily: "AbrilFatface-Regular",
+    textShadowColor: "#000",
+    textShadowOffset: { width: 0.5, height: 0.5 },
+    textShadowRadius: 1,
   },
   errorText: {
     color: "red",
-    alignSelf: "center",
-    paddingBottom: 2,
+    textAlign: "center",
+    marginBottom: 2,
+    fontFamily: "AbrilFatface-Regular",
   },
   iconConfig: {
     elevation: 10,

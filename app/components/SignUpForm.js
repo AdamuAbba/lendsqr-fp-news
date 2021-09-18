@@ -1,136 +1,196 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
-import { Input, Button, Text, SocialIcon, Icon } from "react-native-elements";
+import { View, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import {
+  Input,
+  Button,
+  Text,
+  SocialIcon,
+  Icon,
+  Chip,
+} from "react-native-elements";
 import firebase from "../configs/firebase/fireBaseConfig";
 import { globalStyles } from "../configs/GlobalStyle";
+import { View as MotiView, Text as MotiText, motify } from "moti";
+import colors from "../configs/colors";
 const SignUpForm = ({ navigation }) => {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [signedInUser, setSignedInUser] = useState("");
-
   const signUp = async () => {
-    try {
-      await firebase
-        .auth()
-        .createUserWithEmailAndPassword(email, password)
-        .then((value) =>
-          dbRef.child("Users").child(value.user.uid).child("User Data").set({
-            username: userName,
-            Email: value.user.email,
-            ID: value.user.uid,
-          })
-        );
-    } catch (e) {
-      setError(e.message);
-    }
+    await firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then((value) =>
+        dbRef.child("Users").child(value.user.uid).child("User Data").set({
+          username: userName,
+          Email: value.user.email,
+          ID: value.user.uid,
+        })
+      )
+      .catch((err) => {
+        setError(err.message);
+      });
   };
   return (
     <>
-      <Input
-        label="user name"
-        placeholder="e.g. Radish333"
-        inputContainerStyle={{ borderBottomWidth: 0 }}
-        inputStyle={globalStyles.input}
-        labelStyle={globalStyles.label}
-        value={userName}
-        onChangeText={setUserName}
-        leftIcon={
-          <Icon
-            type="material"
-            name="person"
-            size={23}
-            style={styles.iconStyle}
-            // color={isActive === true ? colors.radGreen : "black"}
-          />
-        }
-      />
-      <Input
-        label="Email"
-        placeholder="  e.g. abc@mail.com"
-        inputContainerStyle={{ borderBottomWidth: 0 }}
-        inputStyle={globalStyles.input}
-        labelStyle={globalStyles.label}
-        value={email}
-        onChangeText={setEmail}
-        leftIcon={
-          <Icon
-            type="material"
-            name="email"
-            size={23}
-            style={styles.iconStyle}
-            // color={isActive === true ? colors.radGreen : "black"}
-          />
-        }
-      />
-      <Input
-        label="Password"
-        placeholder="  e.g. abc@mail.com"
-        inputContainerStyle={{ borderBottomWidth: 0 }}
-        inputStyle={globalStyles.input}
-        labelStyle={globalStyles.label}
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry={true}
-        leftIcon={
-          <Icon
-            name="lock"
-            type="material"
-            size={23}
-            style={styles.iconStyle}
-            // color={isActive === true ? colors.radGreen : "black"}
-          />
-        }
-      />
-      {error ? <Text style={styles.errorText}>{error}</Text> : null}
+      <View style={styles.container}>
+        <View
+          style={{
+            borderBottomColor: colors.radOrange,
+            borderBottomWidth: 3,
+            paddingBottom: 17,
+            elevation: 10,
+          }}
+        >
+          <Text style={styles.formHeader}>Join us</Text>
+        </View>
+        <ScrollView scrollEnabled>
+          <MotiView
+            from={{ translateX: 100, opacity: 0 }}
+            transition={{ type: "spring", delay: 600, duration: 1000 }}
+            animate={{ translateX: 0, opacity: 1 }}
+            style={{ marginTop: 10 }}
+          >
+            <Input
+              placeholder="userName123"
+              textContentType="username"
+              inputContainerStyle={{
+                borderBottomWidth: 0,
+              }}
+              inputStyle={{ ...globalStyles.input }}
+              value={userName}
+              onChangeText={setUserName}
+              leftIcon={
+                <Icon
+                  type="material"
+                  name="person"
+                  size={23}
+                  color={colors.radOrange}
+                />
+              }
+            />
+          </MotiView>
+          <MotiView
+            from={{ translateX: 100, opacity: 0 }}
+            transition={{ type: "spring", delay: 700, duration: 1000 }}
+            animate={{ translateX: 0, opacity: 1 }}
+          >
+            <Input
+              placeholder="  email@domain.com"
+              textContentType="emailAddress"
+              inputContainerStyle={{ borderBottomWidth: 0 }}
+              inputStyle={globalStyles.input}
+              labelStyle={globalStyles.label}
+              value={email}
+              onChangeText={setEmail}
+              leftIcon={
+                <Icon
+                  type="material"
+                  name="email"
+                  size={23}
+                  color={colors.radOrange}
+                  // color={isActive === true ? colors.radGreen : "black"}
+                />
+              }
+            />
+          </MotiView>
+          <MotiView
+            from={{ translateX: 100, opacity: 0 }}
+            transition={{ type: "spring", delay: 800, duration: 1000 }}
+            animate={{ translateX: 0, opacity: 1 }}
+          >
+            <Input
+              placeholder="  ***"
+              textContentType="password"
+              inputContainerStyle={{ borderBottomWidth: 0 }}
+              inputStyle={globalStyles.input}
+              labelStyle={globalStyles.label}
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry={true}
+              leftIcon={
+                <Icon
+                  name="lock"
+                  type="material"
+                  size={23}
+                  color={colors.radOrange} // color={isActive === true ? colors.radGreen : "black"}
+                />
+              }
+            />
+          </MotiView>
+          {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
-      <TouchableOpacity
-        style={styles.forgotView}
-        onPress={() => navigation.navigate("LOGIN")}
-      >
-        <Text style={styles.forgotText}>forgot Password ?</Text>
-      </TouchableOpacity>
-      <Button
-        title="submit"
-        type="solid"
-        buttonStyle={globalStyles.buttonConfig}
-        containerStyle={styles.button}
-        raised={true}
-        onPress={() => signUp()}
-      />
-      <View style={styles.icon}>
-        <SocialIcon type="facebook" iconSize={15} style={styles.iconConfig} />
-        <SocialIcon type="twitter" iconSize={15} style={styles.iconConfig} />
-        <SocialIcon type="instagram" iconSize={15} style={styles.iconConfig} />
+          <MotiView
+            from={{ translateX: 100, opacity: 0 }}
+            transition={{ type: "spring", delay: 900, duration: 1000 }}
+            animate={{ translateX: 0, opacity: 1 }}
+          >
+            <TouchableOpacity
+              style={styles.forgotView}
+              onPress={() => navigation.navigate("LOGIN")}
+            >
+              <Text style={styles.forgotText}>forgot Password ?</Text>
+            </TouchableOpacity>
+            <Chip
+              title="submit"
+              type="solid"
+              titleStyle={globalStyles.buttonTitle}
+              buttonStyle={{ backgroundColor: colors.radOrange }}
+              containerStyle={styles.button}
+              onPress={() => signUp()}
+            />
+          </MotiView>
+        </ScrollView>
       </View>
     </>
   );
 };
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: colors.radBlack,
+    borderTopRightRadius: 30,
+    borderTopLeftRadius: 30,
+    flex: 1,
+    width: "98%",
+    alignSelf: "center",
+  },
   button: {
     width: "50%",
     alignSelf: "center",
-    borderRadius: 20,
+    marginBottom: 20,
+  },
+  formHeader: {
+    color: colors.radWhite,
+    alignSelf: "center",
+    fontSize: 20,
+    fontFamily: "AbrilFatface-Regular",
+    textShadowColor: "#000",
+    textShadowOffset: { width: 0.5, height: 0.5 },
+    textShadowRadius: 1,
   },
   icon: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: 3,
+    marginTop: 3,
   },
   forgotView: {
     alignSelf: "center",
-    marginBottom: 3,
+    marginBottom: 10,
   },
   forgotText: {
-    fontWeight: "bold",
-    color: "red",
+    color: colors.radWhite,
+    fontFamily: "AbrilFatface-Regular",
+    textShadowColor: "#000",
+    textShadowOffset: { width: 0.5, height: 0.5 },
+    textShadowRadius: 1,
   },
   errorText: {
     color: "red",
     alignSelf: "center",
-    paddingBottom: 2,
+    marginBottom: 2,
+    fontFamily: "AbrilFatface-Regular",
   },
   iconConfig: {
     elevation: 10,

@@ -9,31 +9,50 @@ import {
   Keyboard,
   Animated,
   Easing,
+  Dimensions,
 } from "react-native";
-import { Input, Divider, Button, CheckBox, Icon } from "react-native-elements";
+import {
+  Input,
+  Divider,
+  Button,
+  CheckBox,
+  Icon,
+  Overlay,
+} from "react-native-elements";
+import { currentUserUid } from "../store/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { View as MotiView, motify } from "moti";
+
 import { globalStyles } from "../configs/GlobalStyle";
 import RadDishBanner from "./RadDishBanner";
 import colors from "../configs/colors";
 import DateAndTime from "./DateAndTime";
 import { useNavigation } from "@react-navigation/native";
 import firebase from "../configs/firebase/fireBaseConfig";
+import AwesomeAlert from "react-native-awesome-alerts";
+
+const { width, height } = Dimensions.get("window");
 
 const RequestForm = () => {
   useEffect(() => {
-    userLogCheck();
+    dispatchHandler();
+
     return () => {
       null;
     };
   });
-  // const [isActive, setIsActive] = useState(false);
+
+  const { uid } = useSelector((state) => state.userState);
+  const dispatch = useDispatch();
+  const dispatchHandler = () => {
+    dispatch(currentUserUid);
+  };
+
   const [customerName, setCustomerName] = useState("");
   const [servicesValue, setServicesValue] = useState("");
   const [cookingValue, setCookingValue] = useState("");
   const [email, setEmail] = useState("");
-  const [nameError, setNameError] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [phoneError, setPhoneError] = useState("");
-
+  const [visible, setVisible] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [location, setLocation] = useState("");
   const [allergies, setAllergies] = useState("");
@@ -45,18 +64,8 @@ const RequestForm = () => {
   const navigation = useNavigation();
   const iconColor = colors.radOrange;
   const onRequestHandle = () => {
-    requestPush();
-    // navigation.navigate("SummaryScreen");
-  };
-
-  const userLogCheck = () => {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        setSignedInUser(user);
-      } else {
-        return null;
-      }
-    });
+    // requestPush();
+    navigation.navigate("SummaryScreen");
   };
 
   //?animations section
@@ -83,29 +92,24 @@ const RequestForm = () => {
   };
 
   const requestPush = async () => {
-    try {
-      if (!customerName || !email || !phoneNumber) {
-        return Alert.alert("title", "fields cannot be empty", [
-          { title: "ok" },
-        ]);
-      } else {
-        await dbRef
-          .child(signedInUser.uid)
-          .child("userRequests")
-          .set({
-            name: customerName.trim(),
-            Email: email.trim(),
-            phoneNumber: phoneNumber.trim(),
-            Allergies: allergies.trim(),
-            address: location.trim(),
-            serviceChoice: serviceChoice(),
-          })
-          .then(() => {
-            navigation.navigate("SummaryScreen");
-          });
-      }
-    } catch (e) {
-      console.log(e.message);
+    if (!customerName || !email || !phoneNumber) {
+      setVisible(!visible);
+    } else {
+      await dbRef
+        .child(uid)
+        .child("userRequests")
+        .set({
+          name: customerName.trim(),
+          Email: email.trim(),
+          phoneNumber: phoneNumber.trim(),
+          Allergies: allergies.trim(),
+          address: location.trim(),
+          serviceChoice: serviceChoice(),
+        })
+        .then(() => {
+          navigation.navigate("SummaryScreen");
+        })
+        .catch((err) => console.log(err.message));
     }
   };
 
@@ -114,24 +118,16 @@ const RequestForm = () => {
       animationTrigger();
 
       return (
-        <Animated.View
-          style={{
-            transform: [
-              {
-                translateY: initialValue.interpolate({
-                  inputRange: [0, 100],
-                  outputRange: [90, 0],
-                }),
-              },
-            ],
-          }}
+        <MotiView
+          from={{ translateY: 100, opacity: 0 }}
+          transition={{ types: "spring", duration: 1000 }}
+          animate={{ translateY: 0, opacity: 1 }}
         >
           <Input
-            label="Delicacy"
-            placeholder="  i.g. pounded yam and afam soup"
+            placeholder="Delicacy"
             inputContainerStyle={{ borderBottomWidth: 0 }}
-            inputStyle={styles.input}
-            labelStyle={styles.label}
+            inputStyle={globalStyles.input}
+            labelStyle={globalStyles.label}
             value={delicacy}
             errorStyle={styles.errorStyle}
             onChangeText={setDelicacy}
@@ -150,11 +146,10 @@ const RequestForm = () => {
                 color={colors.radGreen}
                 style={styles.iconStyle}
                 color={iconColor}
-                // color={isActive === true ? colors.radGreen : "black"}
               />
             }
           />
-        </Animated.View>
+        </MotiView>
       );
     }
   };
@@ -162,6 +157,7 @@ const RequestForm = () => {
     if (!servicesIsChecked && !cookingIsChecked) {
       return (
         <View style={{ flex: 1 }}>
+          {/* //todo: replace banner with lottieView animation */}
           <RadDishBanner />
         </View>
       );
@@ -216,21 +212,61 @@ const RequestForm = () => {
       );
     }
   };
+
   return (
     <>
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <ScrollView scrollEnabled={true} style={styles.scrollContainer}>
+      <View style={styles.container}>
+        <View
+          style={{
+            borderBottomColor: colors.radOrange,
+            borderBottomWidth: 3,
+            paddingBottom: 17,
+            elevation: 10,
+          }}
+        >
+          <Text style={styles.formHeader}>welcome back</Text>
+        </View>
+        <ScrollView scrollEnabled={true} alwaysBounceVertical={true}>
           {/*//TODO: add Input active and inactive indication  */}
 
+          <AwesomeAlert
+            show={visible}
+            showProgress={false}
+            Animated
+            title="Error"
+            titleStyle={{
+              ...globalStyles.buttonTitle,
+              color: colors.radBlack,
+            }}
+            message="fields cannot be empty"
+            messageStyle={styles.alertText}
+            closeOnTouchOutside={true}
+            closeOnHardwareBackPress={false}
+            showCancelButton={true}
+            cancelButtonColor={colors.radRed}
+            cancelText="return"
+            cancelButtonTextStyle={{
+              ...globalStyles.buttonTitle,
+              fontSize: 14,
+            }}
+            cancelButtonStyle={{
+              ...globalStyles.button,
+              width: 100,
+              borderRadius: 12,
+            }}
+            contentContainerStyle={styles.alertBox}
+            useNativeDriver={true}
+            onCancelPressed={() => {
+              setVisible(false);
+            }}
+          />
           <Input
-            label="Name"
-            placeholder="  e.g. micheal smith"
+            placeholder="name"
             inputContainerStyle={{ borderBottomWidth: 0 }}
-            inputStyle={styles.input}
-            labelStyle={[styles.label, { marginTop: 50 }]}
+            inputStyle={globalStyles.input}
+            labelStyle={globalStyles.label}
             value={customerName}
             onChangeText={setCustomerName}
-            errorMessage={nameError}
             errorStyle={styles.errorStyle}
             leftIcon={
               <Icon
@@ -239,21 +275,18 @@ const RequestForm = () => {
                 size={20}
                 style={styles.iconStyle}
                 color={iconColor}
-                // color={isActive === true ? colors.radGreen : "black"}
               />
             }
           />
 
           <Input
-            label="Email"
-            placeholder="  e.g. abc@mail.com"
+            placeholder="abc@mail.com"
             inputContainerStyle={{ borderBottomWidth: 0 }}
-            inputStyle={styles.input}
-            labelStyle={styles.label}
+            inputStyle={globalStyles.input}
+            labelStyle={globalStyles.label}
             value={email}
             autoCompleteType="email"
             onChangeText={setEmail}
-            errorMessage={emailError}
             errorStyle={styles.errorStyle}
             // onFocus={() => setIsActive(true)}
             // onBlur={() => setIsActive(false)}
@@ -272,14 +305,11 @@ const RequestForm = () => {
             }
           />
           <Input
-            label="Phone Number"
-            placeholder="  e.g. +234..."
+            placeholder="contact no"
             inputContainerStyle={{ borderBottomWidth: 0 }}
-            inputStyle={styles.input}
-            labelStyle={styles.label}
+            inputStyle={globalStyles.input}
+            labelStyle={globalStyles.label}
             value={phoneNumber}
-            errorMessage={phoneError}
-            errorStyle={styles.errorStyle}
             onChangeText={setPhoneNumber}
             keyboardType="numeric"
             leftIcon={
@@ -294,15 +324,13 @@ const RequestForm = () => {
             }
           />
           <Input
-            label="Allergies"
-            placeholder="  i.g. cassava allergy"
+            placeholder="allergies"
             multiline
             numberOfLines={2}
             inputContainerStyle={{ borderBottomWidth: 0 }}
-            inputStyle={styles.input}
-            labelStyle={styles.label}
+            inputStyle={globalStyles.input}
+            labelStyle={globalStyles.label}
             value={allergies}
-            errorStyle={styles.errorStyle}
             onChangeText={setAllergies}
             leftIcon={
               <Icon
@@ -316,21 +344,14 @@ const RequestForm = () => {
             }
           />
           <Input
-            label="Service Location"
-            labelStyle={styles.label}
             multiline
             numberOfLines={3}
             inputContainerStyle={{ borderBottomWidth: 0 }}
-            inputStyle={styles.input}
-            placeholder="  i.e. home address/Landmark"
+            inputStyle={globalStyles.input}
+            labelStyle={globalStyles.label}
+            placeholder="address"
             value={location}
-            errorStyle={styles.errorStyle}
             onChangeText={setLocation}
-            // onFocus={() => setIsActive(true)}
-            // onBlur={() => setIsActive(false)}
-            // inputContainerStyle={{
-            //   borderColor: isActive === true ? colors.radGreen : "black",
-            // }}
             leftIcon={
               <Icon
                 type="material"
@@ -338,7 +359,6 @@ const RequestForm = () => {
                 size={20}
                 style={styles.iconStyle}
                 color={iconColor}
-                // color={isActive === true ? colors.radGreen : "black"}
               />
             }
           />
@@ -403,17 +423,43 @@ const RequestForm = () => {
             ]}
           />
         </ScrollView>
-      </TouchableWithoutFeedback>
+      </View>
     </>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    marginTop: 10,
+    backgroundColor: colors.radBlack,
+    borderTopRightRadius: 30,
+    borderTopLeftRadius: 30,
+    flex: 1,
+    width: "98%",
+    alignSelf: "center",
+  },
+  formHeader: {
+    color: colors.radWhite,
+    alignSelf: "center",
+    fontSize: 20,
+    fontFamily: "AbrilFatface-Regular",
+    textShadowColor: "#000",
+    textShadowOffset: { width: 0.5, height: 0.5 },
+    textShadowRadius: 1,
+  },
   headerStyle: {
     fontStyle: "italic",
     fontWeight: "bold",
   },
-
+  alertText: { fontFamily: "AbrilFatface-Regular", color: colors.radBlack },
+  alertBox: {
+    width: width / 1.5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5,
+  },
   dividerIcon: {
     borderRadius: 10,
     width: "90%",
@@ -447,17 +493,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.radBlack,
   },
 
-  label: {
-    color: colors.radWhite,
-    fontFamily: "AbrilFatface-Regular",
-  },
-  input: {
-    borderColor: colors.radOrange,
-    borderWidth: 2,
-    borderRadius: 15,
-    backgroundColor: colors.radWhite,
-    elevation: 6,
-  },
   checkContainer: {
     width: "100%",
     borderRadius: 20,

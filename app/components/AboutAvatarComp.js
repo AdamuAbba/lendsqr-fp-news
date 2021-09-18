@@ -65,7 +65,7 @@ const AboutAvatarComp = () => {
           size="xlarge"
           rounded
           raised
-          source={require("../assets/hajiya.jpg")}
+          source={require("../assets/images/hajiya.jpg")}
         />
       </Animated.View>
       <View style={styles.textView}>

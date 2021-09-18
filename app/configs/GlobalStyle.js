@@ -7,29 +7,61 @@ export const globalStyles = StyleSheet.create({
     width: "100%",
   },
   globalTitleFont: {
-    fontSize: 30,
+    fontSize: 20,
     color: colors.radWhite,
-    letterSpacing: 3,
     fontFamily: "AbrilFatface-Regular",
   },
   buttonConfig: {
-    backgroundColor: colors.radGreen,
+    backgroundColor: colors.radRed,
   },
+  routeHeaderStyles: {
+    fontFamily: "AbrilFatface-Regular",
+    fontSize: 17,
+  },
+
+  containerShadow: {
+    shadowColor: "#000",
+    shadowOffset: { width: 0.5, height: 0.5 },
+    shadowOpacity: 1,
+    shadowRadius: 2,
+    elevation: 5,
+  },
+
+  textWithShadow: {
+    textAlign: "center",
+    fontFamily: "AbrilFatface-Regular",
+
+    textShadowColor: "#000",
+    textShadowOffset: { width: 0.5, height: 0.5 },
+    textShadowRadius: 1,
+  },
+
   button: {
     width: "50%",
     alignSelf: "center",
     borderRadius: 20,
-    elevation: 7,
+    shadowColor: "#000",
+    shadowOffset: { width: 0.5, height: 0.5 },
+    shadowOpacity: 1,
+    shadowRadius: 2,
+    elevation: 5,
   },
+
   input: {
-    borderColor: colors.radOrange,
-    borderWidth: 2,
+    borderBottomColor: colors.radOrange,
+    borderRightColor: colors.radOrange,
+    borderWidth: 3,
     borderRadius: 15,
     backgroundColor: colors.radWhite,
+    paddingLeft: 10,
     elevation: 6,
   },
   label: {
-    color: "#000000",
+    color: colors.radWhite,
+    fontFamily: "AbrilFatface-Regular",
+  },
+  iconColor: {
+    backgroundColor: colors.radOrange,
   },
   dividerIcon: {
     borderRadius: 10,
@@ -41,5 +73,13 @@ export const globalStyles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  buttonTitle: {
+    textAlign: "center",
+    fontFamily: "AbrilFatface-Regular",
+    fontSize: 17,
+    textShadowColor: "#000",
+    textShadowOffset: { width: 0.5, height: 0.5 },
+    textShadowRadius: 1,
   },
 });

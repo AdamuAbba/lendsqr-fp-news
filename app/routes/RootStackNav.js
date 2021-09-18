@@ -5,13 +5,15 @@ import UserAuthStack from "./UserAuthStack";
 import AppDrawerNav from "./AppDrawerNav";
 import SummaryScreen from "../screens/SummaryScreen";
 import AuthCheckScreen from "../screens/AuthCheckScreen";
-
+import colors from "../configs/colors";
 const Stack = createStackNavigator();
 const RootStackNav = () => {
   return (
     <>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{ cardStyle: { backgroundColor: colors.radBlack } }}
+        >
           <Stack.Screen
             name="AuthCheckScreen"
             component={AuthCheckScreen}

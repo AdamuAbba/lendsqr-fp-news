@@ -1,36 +1,45 @@
 import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Icon } from "react-native-elements";
-import HomeScreen from "../screens/HomeScreen";
 import AboutUsScreen from "../screens/AboutUsScreen";
 import RequestServiceScreen from "../screens/RequestService";
 import CustomDrawerContent from "../shared/CustomDrawerContent";
 import colors from "../configs/colors";
 import UserAvatar from "../components/UserAvatar";
 import HomeNav from "./HomeNav";
+import { View } from "react-native";
+import { View as MotiView } from "moti";
 const Drawer = createDrawerNavigator();
 
 const AppDrawerNav = () => {
   return (
     <>
       <Drawer.Navigator
+        drawerType="slide"
+        overlayColor="transparent"
+        drawerStyle={{
+          width: "70%",
+        }}
         screenOptions={{
           headerStyle: {
             backgroundColor: "#1f1f1f",
+            height: "13%",
           },
+
           headerTitleStyle: { fontFamily: "AbrilFatface-Regular" },
           headerTintColor: "#fff",
         }}
+        sceneContainerStyle={{ backgroundColor: "transparent" }}
         initialRouteName="HomeNav"
         drawerContent={(props) => <CustomDrawerContent {...props} />}
         drawerContentOptions={{
-          activeBackgroundColor: colors.radOrange,
+          activeBackgroundColor: colors.radWhite,
           labelStyle: {
             fontFamily: "AbrilFatface-Regular",
-            fontSize: 19,
+            fontSize: 15,
           },
-          activeTintColor: "#fff",
-          inactiveTintColor: colors.radOrange,
+          activeTintColor: colors.radOrange,
+          inactiveTintColor: colors.radWhite,
         }}
       >
         <Drawer.Screen
@@ -41,12 +50,7 @@ const AppDrawerNav = () => {
             headerShown: true,
             headerRight: () => <UserAvatar />,
             drawerIcon: ({ color, size }) => (
-              <Icon
-                name="home-outline"
-                type="material-community"
-                size={size}
-                color={color}
-              />
+              <Icon name="home" type="material" size={size} color={color} />
             ),
           }}
         />
@@ -74,8 +78,8 @@ const AppDrawerNav = () => {
             headerRight: () => <UserAvatar />,
             drawerIcon: ({ color, size }) => (
               <Icon
-                name="shopping-cart"
-                type="font-awesome"
+                name="storefront"
+                type="material"
                 size={size}
                 color={color}
               />

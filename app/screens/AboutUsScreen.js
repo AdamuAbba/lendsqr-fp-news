@@ -15,6 +15,7 @@ import ParallaxScrollView from "react-native-parallax-scroll-view";
 import AboutHeader from "../components/AboutHeader";
 import AboutAvatarComp from "../components/AboutAvatarComp";
 import { Colors } from "react-native/Libraries/NewAppScreen";
+import AboutRadishComp from "../components/AboutRadishComp";
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const image =
@@ -25,7 +26,7 @@ const AboutUsScreen = ({ navigation }) => {
     <>
       <ParallaxScrollView
         contentBackgroundColor={colors.radWhite}
-        parallaxHeaderHeight={400}
+        parallaxHeaderHeight={500}
         fadeOutBackground
         renderBackground={() => (
           <ImageBackground
@@ -40,13 +41,12 @@ const AboutUsScreen = ({ navigation }) => {
         stickyHeaderHeight={80}
         renderStickyHeader={() => <AboutHeader navigation={navigation} />}
         backgroundSpeed={2}
-        headerBackgroundColor="pink"
-        renderForeground={() => (
-          <View style={{ height: 500 }}>
-            <Text styles={{ color: "#000" }}>Scroll me</Text>
-          </View>
-        )}
-      ></ParallaxScrollView>
+        renderScrollComponent={() => <AboutRadishComp />}
+      >
+        <View style={{ height: 500 }}>
+          <Text>Scroll me</Text>
+        </View>
+      </ParallaxScrollView>
     </>
   );
 };

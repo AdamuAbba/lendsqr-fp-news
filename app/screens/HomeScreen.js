@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, ScrollView, ImageBackground } from "react-native";
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  ImageBackground,
+  SafeAreaView,
+} from "react-native";
 import { Text, Button, Icon } from "react-native-elements";
 import Banner from "./../components/Banner";
 import FormModal from "../components/FormModal";
+import { StatusBar } from "expo-status-bar";
 import AnimatedImageSlider from "rn-animated-image-carousel";
 import colors from "../configs/colors";
 import RadTilesBar from "../components/RadTilesBar";
 import RadishMotto from "../shared/RadishMotto";
+import { globalStyles } from "../configs/GlobalStyle";
 
 const images = [
   "https://media.istockphoto.com/photos/regional-african-food-picture-id1169415720?k=6&m=1169415720&s=612x612&w=0&h=qYzDru_krKMBM4_58eW4m-cdkIxU7a1YS-V32poO8BQ=",
@@ -21,25 +29,24 @@ const backgroundImg =
 const HomeScreen = ({ navigation }) => {
   return (
     <>
+      <StatusBar translucent />
       <RadishMotto />
-      <ImageBackground style={styles.image} source={{ uri: backgroundImg }}>
+      <View>
         <ScrollView scrollEnabled={true}>
-          <View style={{ flex: 1 }}>
+          <View>
             <AnimatedImageSlider
               inActiveDotColor="red"
               activeDotColor={colors.radOrange}
               imageBorderRadius={10}
-              imageContainerStyle={styles.imageStyle}
               imageHeight={250}
               imageWidth={350}
               data={images}
+              dotsContainerStyle={{ paddingBottom: 10 }}
             />
-          </View>
-          <View style={styles.radTilesBarView}>
             <RadTilesBar />
           </View>
         </ScrollView>
-      </ImageBackground>
+      </View>
     </>
   );
 };
@@ -48,13 +55,6 @@ const styles = StyleSheet.create({
   image: {
     height: "100%",
     width: "100%",
-  },
-  container: {
-    backgroundColor: "#969696",
-  },
-  radTilesBarView: {
-    flex: 1,
-    marginTop: 20,
   },
 });
 
