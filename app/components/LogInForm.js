@@ -19,13 +19,18 @@ const LogInForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const signIn = async () => {
+    setIsLoading(!isLoading);
     await firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => navigation.navigate("AppDrawerNav"))
-      .catch((err) => setError(err.message));
+      .catch((err) => {
+        setError(err.message);
+        setIsLoading(isLoading);
+      });
   };
   return (
     <>
@@ -35,7 +40,6 @@ const LogInForm = () => {
             borderBottomColor: colors.radOrange,
             borderBottomWidth: 3,
             paddingBottom: 17,
-            elevation: 10,
           }}
         >
           <Text style={styles.formHeader}>welcome back</Text>
@@ -105,6 +109,7 @@ const LogInForm = () => {
             <Chip
               title="login"
               type="solid"
+              loading={isLoading}
               titleStyle={globalStyles.buttonTitle}
               buttonStyle={{ backgroundColor: colors.radOrange }}
               containerStyle={styles.button}

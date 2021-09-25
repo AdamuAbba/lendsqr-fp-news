@@ -30,10 +30,8 @@ export const globalStyles = StyleSheet.create({
   textWithShadow: {
     textAlign: "center",
     fontFamily: "AbrilFatface-Regular",
-
     textShadowColor: "#000",
     textShadowOffset: { width: 0.5, height: 0.5 },
-    textShadowRadius: 1,
   },
 
   button: {
@@ -54,7 +52,11 @@ export const globalStyles = StyleSheet.create({
     borderRadius: 15,
     backgroundColor: colors.radWhite,
     paddingLeft: 10,
-    elevation: 6,
+    fontFamily: "AbrilFatface-Regular",
+    textShadowColor: "#000",
+    textShadowOffset: { width: 0.5, height: 0.5 },
+    textAlign: "left",
+    fontSize: 14,
   },
   label: {
     color: colors.radWhite,

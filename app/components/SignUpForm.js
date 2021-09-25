@@ -17,19 +17,23 @@ const SignUpForm = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const signUp = async () => {
     await firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then((value) =>
-        dbRef.child("Users").child(value.user.uid).child("User Data").set({
-          username: userName,
-          Email: value.user.email,
-          ID: value.user.uid,
-        })
+      .then(
+        (value) =>
+          dbRef.child("Users").child(value.user.uid).child("User Data").set({
+            username: userName,
+            Email: value.user.email,
+            ID: value.user.uid,
+          }),
+        setIsLoading(!isLoading)
       )
       .catch((err) => {
         setError(err.message);
+        setIsLoading(isLoading);
       });
   };
   return (
@@ -40,7 +44,6 @@ const SignUpForm = ({ navigation }) => {
             borderBottomColor: colors.radOrange,
             borderBottomWidth: 3,
             paddingBottom: 17,
-            elevation: 10,
           }}
         >
           <Text style={styles.formHeader}>Join us</Text>
@@ -134,6 +137,7 @@ const SignUpForm = ({ navigation }) => {
             </TouchableOpacity>
             <Chip
               title="submit"
+              loading={isLoading}
               type="solid"
               titleStyle={globalStyles.buttonTitle}
               buttonStyle={{ backgroundColor: colors.radOrange }}

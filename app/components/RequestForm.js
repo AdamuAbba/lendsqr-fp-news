@@ -1,30 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  Alert,
-  TouchableWithoutFeedback,
-  Keyboard,
-  Animated,
-  Easing,
-  Dimensions,
-} from "react-native";
-import {
-  Input,
-  Divider,
-  Button,
-  CheckBox,
-  Icon,
-  Overlay,
-} from "react-native-elements";
+import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
+import { Input, Divider, Button, CheckBox, Icon } from "react-native-elements";
 import { currentUserUid } from "../store/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { View as MotiView, motify } from "moti";
+import { View as MotiView, Text as MotiText } from "moti";
 
 import { globalStyles } from "../configs/GlobalStyle";
-import RadDishBanner from "./RadDishBanner";
 import colors from "../configs/colors";
 import DateAndTime from "./DateAndTime";
 import { useNavigation } from "@react-navigation/native";
@@ -36,7 +17,6 @@ const { width, height } = Dimensions.get("window");
 const RequestForm = () => {
   useEffect(() => {
     dispatchHandler();
-
     return () => {
       null;
     };
@@ -59,24 +39,11 @@ const RequestForm = () => {
   const [delicacy, setDelicacy] = useState("");
   const [servicesIsChecked, setServicesIsChecked] = useState(false);
   const [cookingIsChecked, setCookingIsChecked] = useState(false);
-  const [signedInUser, setSignedInUser] = useState("");
   const dbRef = firebase.database().ref("Users");
   const navigation = useNavigation();
-  const iconColor = colors.radOrange;
   const onRequestHandle = () => {
-    // requestPush();
-    navigation.navigate("SummaryScreen");
-  };
-
-  //?animations section
-  const initialValue = useRef(new Animated.Value(0)).current;
-  const animationTrigger = () => {
-    Animated.timing(initialValue, {
-      toValue: 100,
-      duration: 1000,
-      easing: Easing.bounce,
-      useNativeDriver: true,
-    }).start();
+    requestPush();
+    // navigation.navigate("SummaryScreen");
   };
 
   let cookingChoice = { cooking: { foodChoice: delicacy.trim() } };
@@ -93,7 +60,7 @@ const RequestForm = () => {
 
   const requestPush = async () => {
     if (!customerName || !email || !phoneNumber) {
-      setVisible(!visible);
+      setVisible(true);
     } else {
       await dbRef
         .child(uid)
@@ -115,8 +82,6 @@ const RequestForm = () => {
 
   const delicacySpec = () => {
     if (cookingIsChecked) {
-      animationTrigger();
-
       return (
         <MotiView
           from={{ translateY: 100, opacity: 0 }}
@@ -133,19 +98,13 @@ const RequestForm = () => {
             onChangeText={setDelicacy}
             multiline
             numberOfLines={3}
-            // onFocus={() => setIsActive(true)}
-            // onBlur={() => setIsActive(false)}
-            // inputContainerStyle={{
-            //   borderColor: isActive === true ? colors.radGreen : null,
-            // }}
             leftIcon={
               <Icon
                 type="material"
                 name="restaurant"
                 size={21}
-                color={colors.radGreen}
                 style={styles.iconStyle}
-                color={iconColor}
+                color={colors.radOrange}
               />
             }
           />
@@ -156,53 +115,64 @@ const RequestForm = () => {
   const checkNotice = () => {
     if (!servicesIsChecked && !cookingIsChecked) {
       return (
-        <View style={{ flex: 1 }}>
-          {/* //todo: replace banner with lottieView animation */}
-          <RadDishBanner />
-        </View>
+        <MotiText
+          from={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{
+            type: "timing",
+            duration: 2000,
+            loop: true,
+            repeatReverse: true,
+          }}
+          style={{
+            ...globalStyles.textWithShadow,
+            color: colors.radWhite,
+          }}
+        >
+          select service type above
+        </MotiText>
       );
     } else if (servicesIsChecked) {
-      animationTrigger();
       return (
-        <Animated.Text
-          style={[
-            styles.noticeText,
-            {
-              transform: [
-                {
-                  translateX: initialValue.interpolate({
-                    inputRange: [0, 100],
-                    outputRange: [90, 0],
-                  }),
-                },
-              ],
-            },
-          ]}
-        >
-          Our Service team will contact you shortly after submission...
-        </Animated.Text>
+        <View>
+          <MotiText
+            from={{ translateX: -200 }}
+            animate={{ translateX: 0 }}
+            transition={{
+              type: "spring",
+              duration: 1000,
+            }}
+            style={{
+              ...globalStyles.textWithShadow,
+              textAlign: "left",
+              paddingLeft: 10,
+              color: colors.radWhite,
+            }}
+          >
+            our service team will contact shortly after submission
+          </MotiText>
+        </View>
       );
     } else if (cookingIsChecked) {
-      animationTrigger();
       return (
-        <Animated.Text
-          style={[
-            styles.noticeText,
-            {
-              transform: [
-                {
-                  translateX: initialValue.interpolate({
-                    inputRange: [0, 100],
-                    outputRange: [90, 0],
-                  }),
-                },
-              ],
-            },
-          ]}
-        >
-          Specify a delicacy below and we will send you our best chef for that
-          delicacy...
-        </Animated.Text>
+        <View>
+          <MotiText
+            from={{ translateX: 200 }}
+            animate={{ translateX: 0 }}
+            transition={{
+              type: "spring",
+              duration: 1000,
+            }}
+            style={{
+              ...globalStyles.textWithShadow,
+              textAlign: "right",
+              paddingRight: 10,
+              color: colors.radWhite,
+            }}
+          >
+            specify a delicacy below and we'll send a specialist your way
+          </MotiText>
+        </View>
       );
     } else if (servicesIsChecked && cookingIsChecked) {
       return (
@@ -221,14 +191,12 @@ const RequestForm = () => {
             borderBottomColor: colors.radOrange,
             borderBottomWidth: 3,
             paddingBottom: 17,
-            elevation: 10,
           }}
         >
-          <Text style={styles.formHeader}>welcome back</Text>
+          <Text style={styles.formHeader}>Request form</Text>
         </View>
-        <ScrollView scrollEnabled={true} alwaysBounceVertical={true}>
+        <ScrollView scrollEnabled>
           {/*//TODO: add Input active and inactive indication  */}
-
           <AwesomeAlert
             show={visible}
             showProgress={false}
@@ -243,7 +211,7 @@ const RequestForm = () => {
             closeOnTouchOutside={true}
             closeOnHardwareBackPress={false}
             showCancelButton={true}
-            cancelButtonColor={colors.radRed}
+            cancelButtonColor={colors.radOrange}
             cancelText="return"
             cancelButtonTextStyle={{
               ...globalStyles.buttonTitle,
@@ -260,152 +228,192 @@ const RequestForm = () => {
               setVisible(false);
             }}
           />
-          <Input
-            placeholder="name"
-            inputContainerStyle={{ borderBottomWidth: 0 }}
-            inputStyle={globalStyles.input}
-            labelStyle={globalStyles.label}
-            value={customerName}
-            onChangeText={setCustomerName}
-            errorStyle={styles.errorStyle}
-            leftIcon={
-              <Icon
-                type="material"
-                name="person"
-                size={20}
-                style={styles.iconStyle}
-                color={iconColor}
-              />
-            }
-          />
 
-          <Input
-            placeholder="abc@mail.com"
-            inputContainerStyle={{ borderBottomWidth: 0 }}
-            inputStyle={globalStyles.input}
-            labelStyle={globalStyles.label}
-            value={email}
-            autoCompleteType="email"
-            onChangeText={setEmail}
-            errorStyle={styles.errorStyle}
-            // onFocus={() => setIsActive(true)}
-            // onBlur={() => setIsActive(false)}
-            // inputContainerStyle={{
-            //   borderColor: isActive === true ? colors.radGreen : null,
-            // }}
-            leftIcon={
-              <Icon
-                type="material"
-                name="email"
-                size={23}
-                style={styles.iconStyle}
-                color={iconColor}
-                // color={isActive === true ? colors.radGreen : "black"}
-              />
-            }
-          />
-          <Input
-            placeholder="contact no"
-            inputContainerStyle={{ borderBottomWidth: 0 }}
-            inputStyle={globalStyles.input}
-            labelStyle={globalStyles.label}
-            value={phoneNumber}
-            onChangeText={setPhoneNumber}
-            keyboardType="numeric"
-            leftIcon={
-              <Icon
-                type="font-awesome"
-                name="mobile"
-                size={30}
-                style={styles.iconStyle}
-                color={iconColor}
-                // color={isActive === true ? colors.radGreen : "black"}
-              />
-            }
-          />
-          <Input
-            placeholder="allergies"
-            multiline
-            numberOfLines={2}
-            inputContainerStyle={{ borderBottomWidth: 0 }}
-            inputStyle={globalStyles.input}
-            labelStyle={globalStyles.label}
-            value={allergies}
-            onChangeText={setAllergies}
-            leftIcon={
-              <Icon
-                type="font-awesome"
-                name="stethoscope"
-                size={25}
-                style={styles.iconStyle}
-                color={iconColor}
-                // color={isActive === true ? colors.radGreen : "black"}
-              />
-            }
-          />
-          <Input
-            multiline
-            numberOfLines={3}
-            inputContainerStyle={{ borderBottomWidth: 0 }}
-            inputStyle={globalStyles.input}
-            labelStyle={globalStyles.label}
-            placeholder="address"
-            value={location}
-            onChangeText={setLocation}
-            leftIcon={
-              <Icon
-                type="material"
-                name="place"
-                size={20}
-                style={styles.iconStyle}
-                color={iconColor}
-              />
-            }
-          />
-          <Divider
-            orientation="horizontal"
-            subHeader="Service Requirement (please tick an option)"
-            subHeaderStyle={styles.dividerText}
-            width={10}
-            style={styles.dividerIcon}
-          />
-          <View style={styles.checkGroup}>
-            <View style={{ flex: 1 }}>
-              <CheckBox
-                title="services"
-                onPress={() => setServicesIsChecked(!servicesIsChecked)}
-                checkedColor={colors.radGreen}
-                checkedTitle="services selected"
-                value={servicesValue}
-                checked={servicesIsChecked}
-                onChangeText={() => setServicesValue("services")}
-                containerStyle={styles.checkContainer}
-              />
-              <CheckBox
-                title="cooking"
-                onPress={() => setCookingIsChecked(!cookingIsChecked)}
-                checkedTitle="cooking selected"
-                checkedColor={colors.radGreen}
-                value={cookingValue}
-                checked={cookingIsChecked}
-                onChangeText={() => setCookingValue("cooking")}
-                containerStyle={styles.checkContainer}
-              />
-            </View>
-            <Divider
-              orientation="vertical"
-              width={8}
-              style={styles.noticeDivider}
-              color={colors.radOrange}
+          <MotiView
+            from={{ translateX: 100, opacity: 0 }}
+            transition={{ type: "spring", delay: 600, duration: 1000 }}
+            animate={{ translateX: 0, opacity: 1 }}
+            style={{ marginTop: 10 }}
+          >
+            <Input
+              placeholder="name"
+              inputContainerStyle={{ borderBottomWidth: 0 }}
+              inputStyle={globalStyles.input}
+              labelStyle={globalStyles.label}
+              value={customerName}
+              onChangeText={setCustomerName}
+              leftIcon={
+                <Icon
+                  type="material"
+                  name="person"
+                  size={23}
+                  style={styles.iconStyle}
+                  color={colors.radOrange}
+                />
+              }
             />
-            <View style={{ flex: 1, marginRight: 10 }}>{checkNotice()}</View>
+          </MotiView>
+
+          <MotiView
+            from={{ translateX: 100, opacity: 0 }}
+            transition={{ type: "spring", delay: 700, duration: 1000 }}
+            animate={{ translateX: 0, opacity: 1 }}
+          >
+            <Input
+              placeholder="abc@mail.com"
+              inputContainerStyle={{ borderBottomWidth: 0 }}
+              inputStyle={globalStyles.input}
+              labelStyle={globalStyles.label}
+              value={email}
+              autoCompleteType="email"
+              onChangeText={setEmail}
+              leftIcon={
+                <Icon
+                  type="material"
+                  name="email"
+                  size={23}
+                  style={styles.iconStyle}
+                  color={colors.radOrange}
+                />
+              }
+            />
+          </MotiView>
+
+          <MotiView
+            from={{ translateX: 100, opacity: 0 }}
+            transition={{ type: "spring", delay: 800, duration: 1000 }}
+            animate={{ translateX: 0, opacity: 1 }}
+          >
+            <Input
+              placeholder="+123"
+              inputContainerStyle={{ borderBottomWidth: 0 }}
+              inputStyle={globalStyles.input}
+              labelStyle={globalStyles.label}
+              value={phoneNumber}
+              autoCompleteType="tel"
+              onChangeText={setPhoneNumber}
+              keyboardType="numeric"
+              leftIcon={
+                <Icon
+                  type="material"
+                  name="phone"
+                  size={23}
+                  style={styles.iconStyle}
+                  color={colors.radOrange}
+                />
+              }
+            />
+          </MotiView>
+
+          <MotiView
+            from={{ translateX: 100, opacity: 0 }}
+            transition={{ type: "spring", delay: 800, duration: 1000 }}
+            animate={{ translateX: 0, opacity: 1 }}
+          >
+            <Input
+              placeholder="allergies"
+              inputContainerStyle={{ borderBottomWidth: 0 }}
+              inputStyle={globalStyles.input}
+              labelStyle={globalStyles.label}
+              value={allergies}
+              onChangeText={setAllergies}
+              leftIcon={
+                <Icon
+                  type="font-awesome"
+                  name="stethoscope"
+                  size={23}
+                  style={styles.iconStyle}
+                  color={colors.radOrange}
+                />
+              }
+            />
+          </MotiView>
+
+          <MotiView
+            from={{ translateX: 100, opacity: 0 }}
+            transition={{ type: "spring", delay: 900, duration: 1000 }}
+            animate={{ translateX: 0, opacity: 1 }}
+          >
+            <Input
+              multiline
+              numberOfLines={3}
+              inputContainerStyle={{ borderBottomWidth: 0 }}
+              inputStyle={globalStyles.input}
+              labelStyle={globalStyles.label}
+              placeholder="address"
+              value={location}
+              onChangeText={setLocation}
+              leftIcon={
+                <Icon
+                  type="material"
+                  name="place"
+                  size={23}
+                  style={styles.iconStyle}
+                  color={colors.radOrange}
+                />
+              }
+            />
+          </MotiView>
+
+          <View style={styles.checkGroup}>
+            <View style={{ flex: 1, flexDirection: "row" }}>
+              <MotiView
+                from={{ translateX: -100, opacity: 0 }}
+                transition={{ type: "spring", delay: 1000, duration: 1000 }}
+                animate={{ translateX: 0, opacity: 1 }}
+              >
+                <CheckBox
+                  title="services"
+                  onPress={() => setServicesIsChecked(!servicesIsChecked)}
+                  checkedColor={colors.radGreen}
+                  checkedTitle="services"
+                  value={servicesValue}
+                  checked={servicesIsChecked}
+                  onChangeText={() => setServicesValue("services")}
+                  containerStyle={{
+                    ...globalStyles.input,
+                    borderBottomColor: servicesIsChecked
+                      ? colors.radGreen
+                      : colors.radOrange,
+                  }}
+                />
+              </MotiView>
+
+              <MotiView
+                from={{ translateX: -100, opacity: 0 }}
+                transition={{ type: "spring", delay: 1250, duration: 1000 }}
+                animate={{ translateX: 0, opacity: 1 }}
+              >
+                <CheckBox
+                  title="cooking"
+                  onPress={() => setCookingIsChecked(!cookingIsChecked)}
+                  checkedTitle="cooking"
+                  checkedColor={colors.radGreen}
+                  value={cookingValue}
+                  checked={cookingIsChecked}
+                  onChangeText={() => setCookingValue("cooking")}
+                  containerStyle={{
+                    ...globalStyles.input,
+                    borderBottomColor: cookingIsChecked
+                      ? colors.radGreen
+                      : colors.radOrange,
+                  }}
+                />
+              </MotiView>
+            </View>
+
+            <View style={{ flex: 1 }}>{checkNotice()}</View>
           </View>
           {delicacySpec()}
           <Divider
             orientation="horizontal"
             subHeader="pick a preferred Date and Time"
-            subHeaderStyle={styles.dividerText}
-            width={10}
+            subHeaderStyle={{
+              ...globalStyles.textWithShadow,
+              color: colors.radWhite,
+              paddingBottom: 5,
+            }}
+            width={5}
             style={styles.dividerIcon}
             color={colors.radOrange}
           />
@@ -416,7 +424,8 @@ const RequestForm = () => {
             title="Request"
             type="solid"
             onPress={() => onRequestHandle()}
-            buttonStyle={globalStyles.buttonConfig}
+            buttonStyle={{ backgroundColor: colors.radOrange }}
+            titleStyle={{ ...globalStyles.textWithShadow }}
             containerStyle={[
               globalStyles.button,
               { marginBottom: 20, marginTop: 20 },
@@ -430,7 +439,6 @@ const RequestForm = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 10,
     backgroundColor: colors.radBlack,
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
@@ -496,13 +504,14 @@ const styles = StyleSheet.create({
   checkContainer: {
     width: "100%",
     borderRadius: 20,
-    borderColor: colors.radOrange,
+    borderBottomColor: colors.radOrange,
+    borderRightColor: colors.radOrange,
     borderWidth: 2,
-    elevation: 7,
     backgroundColor: "#ffffff",
   },
   checkGroup: {
-    flexDirection: "row",
+    flex: 1,
+    alignItems: "center",
     marginBottom: 10,
   },
   noticeText: {

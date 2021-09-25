@@ -4,19 +4,10 @@ import { View, ImageBackground, StyleSheet } from "react-native";
 import { View as MotiView, Text as MotiText } from "moti";
 import { StatusBar } from "expo-status-bar";
 import { globalStyles } from "../configs/GlobalStyle";
-import firebase from "../configs/firebase/fireBaseConfig";
 import colors from "../configs/colors";
 import LottieView from "lottie-react-native";
-const image =
-  "https://images.pexels.com/photos/1624487/pexels-photo-1624487.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260";
 
 const WelcomeScreen = ({ navigation }) => {
-  useEffect(() => {
-    return () => {
-      null;
-    };
-  });
-
   return (
     <>
       <MotiView
@@ -25,6 +16,7 @@ const WelcomeScreen = ({ navigation }) => {
         animate={{ rotateY: "0deg", opacity: 1 }}
         style={styles.container}
       >
+        <StatusBar />
         <View style={styles.firstView}>
           <MotiView
             transition={{ type: "spring", duration: 500 }}

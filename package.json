@@ -29,6 +29,7 @@
     "firebase": "8.2.3",
     "image-auto-scroll": "^1.0.1",
     "lottie-react-native": "4.0.2",
+    "moment": "^2.29.1",
     "moti": "^0.14.2",
     "prop-types": "^15.7.2",
     "react": "16.13.1",

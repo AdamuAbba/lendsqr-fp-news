@@ -6,15 +6,14 @@ import {
   ImageBackground,
   SafeAreaView,
 } from "react-native";
-import { Text, Button, Icon } from "react-native-elements";
-import Banner from "./../components/Banner";
-import FormModal from "../components/FormModal";
 import { StatusBar } from "expo-status-bar";
 import AnimatedImageSlider from "rn-animated-image-carousel";
 import colors from "../configs/colors";
 import RadTilesBar from "../components/RadTilesBar";
 import RadishMotto from "../shared/RadishMotto";
 import { globalStyles } from "../configs/GlobalStyle";
+import { View as MotiView, Text as MotiText, useAnimationState } from "moti";
+import LottieView from "lottie-react-native";
 
 const images = [
   "https://media.istockphoto.com/photos/regional-african-food-picture-id1169415720?k=6&m=1169415720&s=612x612&w=0&h=qYzDru_krKMBM4_58eW4m-cdkIxU7a1YS-V32poO8BQ=",
@@ -23,39 +22,139 @@ const images = [
   "https://thumbs.dreamstime.com/b/nigerian-food-delicious-fried-plantain-red-chilli-sauce-table-lunch-tasty-african-cuisine-nigerian-food-delicious-185024971.jpg",
 ];
 
-const backgroundImg =
-  "https://images.unsplash.com/photo-1534766438357-2b270dbd1b40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=634&q=80";
+const steps = [
+  { step: "Register", id: "1" },
+  { step: "request", id: "2" },
+  { step: "chill and let us cook for you", id: "3" },
+];
 
 const HomeScreen = ({ navigation }) => {
+  const radTileState = useAnimationState({
+    from: {
+      transform: [
+        {
+          translateX: -100,
+        },
+        {
+          rotateY: "90deg",
+        },
+      ],
+      opacity: 0,
+      duration: 1000,
+    },
+    active: {
+      transform: [
+        {
+          translateX: 0,
+        },
+        {
+          rotateY: "0deg",
+        },
+      ],
+      opacity: 1,
+      duration: 1000,
+    },
+  });
+
+  const stepState = useAnimationState({
+    from: {
+      scale: 0,
+      opacity: 0,
+      duration: 1000,
+    },
+    active: {
+      scale: 1,
+      opacity: 1,
+      duration: 1000,
+    },
+  });
+  let yAxis = 0;
+
+  const radTilesTransition = () => {
+    if (yAxis >= 200) {
+      return radTileState.transitionTo("active");
+    }
+  };
+
+  const stepStateTransition = () => {
+    if (yAxis >= 1480) {
+      return stepState.transitionTo("active");
+    }
+  };
+
+  const getScrollPosition = (e) => {
+    yAxis = e.nativeEvent.contentOffset.y;
+    radTilesTransition();
+    stepStateTransition();
+  };
+
+  let counter = 1;
+
   return (
     <>
-      <StatusBar translucent />
-      <RadishMotto />
       <View>
-        <ScrollView scrollEnabled={true}>
-          <View>
-            <AnimatedImageSlider
-              inActiveDotColor="red"
-              activeDotColor={colors.radOrange}
-              imageBorderRadius={10}
-              imageHeight={250}
-              imageWidth={350}
-              data={images}
-              dotsContainerStyle={{ paddingBottom: 10 }}
-            />
+        <StatusBar />
+        <RadishMotto />
+        <ScrollView scrollEnabled={true} onScroll={(e) => getScrollPosition(e)}>
+          <AnimatedImageSlider
+            inActiveDotColor="red"
+            activeDotColor={colors.radOrange}
+            imageBorderRadius={10}
+            imageHeight={250}
+            imageWidth={350}
+            data={images}
+            dotsContainerStyle={{ paddingBottom: 10 }}
+          />
+          <LottieView
+            autoPlay
+            style={{
+              height: 50,
+              width: 50,
+              alignSelf: "center",
+              marginBottom: 10,
+            }}
+            source={require("../assets/images/slideUpArrows.json")}
+          />
+          {/* view for the tiles */}
+          <MotiView state={radTileState}>
             <RadTilesBar />
-          </View>
+          </MotiView>
+          {/* steps view */}
+          <MotiView
+            state={stepState}
+            style={{ marginBottom: 200, flexDirection: "row", flex: 1 }}
+          >
+            <View style={{ flex: 1, justifyContent: "center" }}>
+              {steps.map((item) => (
+                <MotiText
+                  style={{
+                    marginBottom: 3,
+                    marginLeft: 5,
+                    ...globalStyles.textWithShadow,
+                    textAlign: "left",
+                  }}
+                  key={item.id}
+                >
+                  {`${counter++}  ${item.step}`}
+                </MotiText>
+              ))}
+            </View>
+            <LottieView
+              autoPlay
+              style={{
+                height: 250,
+                alignSelf: "flex-end",
+                flex: 2,
+              }}
+              source={require("../assets/images/appointmentBooking.json")}
+            />
+          </MotiView>
         </ScrollView>
       </View>
     </>
   );
 };
 
-const styles = StyleSheet.create({
-  image: {
-    height: "100%",
-    width: "100%",
-  },
-});
+const styles = StyleSheet.create({});
 
 export default HomeScreen;

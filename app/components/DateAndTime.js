@@ -1,20 +1,23 @@
-import React, { useState } from "react";
-import DateTimePicker from "@react-native-community/datetimepicker";
-import { View, Text, StyleSheet } from "react-native";
-import { Button, Chip } from "react-native-elements";
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { Input, Icon } from "react-native-elements";
 import { globalStyles } from "../configs/GlobalStyle";
 import colors from "../configs/colors";
-import { LinearGradient } from "expo-linear-gradient";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import moment from "moment";
 
 const DateAndTime = () => {
-  const [date, setDate] = useState(new Date(1598051730000));
-  const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState("");
+
+  const dateSelected = moment(date).format("MMMM Do, YYYY");
+  const timeSelected = moment(date).format("h:mm a");
 
   {
     /* //? what's the purpose of this function? */
   }
-  const onDateTimeChange = (event, selectedDate) => {
+  const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === "ios");
     setDate(currentDate);
@@ -31,48 +34,20 @@ const DateAndTime = () => {
   {
     /* //* this method displays the Date Picker*/
   }
-  const showDatepicker = () => {
+  const showDatePicker = () => {
     showMode("date");
   };
 
   {
     /* //* this method displays the Time Picker*/
   }
-  const showTimepicker = () => {
+  const showTimePicker = () => {
     showMode("time");
   };
 
   return (
     <>
       <View>
-        {/* //* Button to trigger the Date Picker UI*/}
-        <Chip
-          onPress={showDatepicker}
-          title="Date"
-          raised={true}
-          ViewComponent={LinearGradient}
-          linearGradientProps={{
-            colors: [colors.radOrange, "red"],
-            start: { x: 0, y: 0.5 },
-            end: { x: 1, y: 0.5 },
-          }}
-          containerStyle={[styles.container, { alignSelf: "flex-end" }]}
-        />
-
-        {/* //* Button to trigger the Time Picker UI*/}
-        <Chip
-          onPress={showTimepicker}
-          title="Time"
-          raised={true}
-          ViewComponent={LinearGradient}
-          containerStyle={styles.container}
-          linearGradientProps={{
-            colors: [colors.radOrange, "red"],
-            start: { x: 0, y: 0.5 },
-            end: { x: 1, y: 0.5 },
-          }}
-        />
-
         {show && (
           <DateTimePicker
             testID="dateTimePicker"
@@ -80,19 +55,78 @@ const DateAndTime = () => {
             mode={mode}
             is24Hour={true}
             display="default"
-            onChange={onDateTimeChange}
+            onChange={onChange}
           />
         )}
+        {/* //* Date input component to trigger the Date Picker UI*/}
+
+        <View style={styles.mainContainer}>
+          <Icon
+            name="today"
+            type="material"
+            size={23}
+            style={styles.iconStyle}
+            color={colors.radOrange}
+          />
+          <TouchableOpacity
+            style={{ ...globalStyles.input, flex: 1 }}
+            onPress={() => showDatePicker()}
+          >
+            <Text
+              style={{
+                ...globalStyles.textWithShadow,
+                ...styles.text,
+              }}
+            >
+              {dateSelected}
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* //* Time input component to trigger render of Time Picker UI*/}
+
+        <View style={{ ...styles.mainContainer, marginTop: 10 }}>
+          <Icon
+            name="watch"
+            type="material"
+            size={23}
+            style={styles.iconStyle}
+            color={colors.radOrange}
+          />
+          <TouchableOpacity
+            style={{ ...globalStyles.input, flex: 1 }}
+            onPress={() => showTimePicker()}
+          >
+            <Text
+              style={{
+                ...globalStyles.textWithShadow,
+                ...styles.text,
+              }}
+            >
+              {timeSelected}
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </>
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    width: "70%",
-    marginBottom: 8,
-    marginHorizontal: 8,
-    borderRadius: 18,
+  mainContainer: {
+    flexDirection: "row",
+    flex: 1,
+    alignItems: "center",
+    alignSelf: "center",
+    paddingHorizontal: 10,
+  },
+  iconStyle: {
+    marginRight: 10,
+  },
+  text: {
+    textAlign: "left",
+    textAlignVertical: "center",
+    textShadowRadius: 0,
+    height: 33,
   },
 });
 export default DateAndTime;

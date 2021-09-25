@@ -8,6 +8,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import colors from "../configs/colors";
 import { Icon } from "react-native-elements";
 import { HeaderTitle } from "@react-navigation/stack";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 const Tab = createMaterialBottomTabNavigator();
 
 const HomeNav = () => {
@@ -16,8 +17,8 @@ const HomeNav = () => {
       <Tab.Navigator
         initialRouteName="Home"
         shifting={true}
-        activeColor="#fff"
-        inactiveColor="#000"
+        activeColor={colors.radOrange}
+        inactiveColor={colors.radWhite}
         barStyle={{ backgroundColor: "#fff" }}
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
@@ -41,12 +42,15 @@ const HomeNav = () => {
         <Tab.Screen
           name="Home"
           component={HomeScreen}
-          options={{ title: "Home", tabBarColor: colors.radOrange }}
+          options={{
+            title: "Home",
+            tabBarColor: colors.radBlack,
+          }}
         />
         <Tab.Screen
           name="contactUs"
           component={ContactUsScreen}
-          options={{ title: "contact us", tabBarColor: colors.radGreen }}
+          options={{ title: "contact us", tabBarColor: colors.radBlack }}
         />
       </Tab.Navigator>
     </>

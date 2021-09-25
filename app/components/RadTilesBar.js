@@ -21,7 +21,7 @@ const secondFeaturedImage =
 const RadTilesBar = () => {
   return (
     <>
-      <ScrollView scrollEnabled={true} style={styles.container}>
+      <ScrollView scrollEnabled={true} contentContainerStyle={styles.container}>
         <Tile
           touchSoundDisabled
           activeOpacity={1}
@@ -36,10 +36,11 @@ const RadTilesBar = () => {
             ...styles.tileContainer,
           }}
           containerStyle={{ ...styles.theTileStyle }}
-          imageContainerStyle={styles.introTileImage}
+          imageContainerStyle={{ ...styles.introTileImage }}
         >
           <Text
             style={{
+              flex: 1,
               ...globalStyles.textWithShadow,
               color: colors.radWhite,
               fontSize: 13,
@@ -70,6 +71,7 @@ const RadTilesBar = () => {
             ...styles.theTileStyle,
             alignSelf: "flex-end",
             marginRight: 10,
+            marginLeft: 0,
           }}
           imageContainerStyle={{
             ...styles.introTileImage,
@@ -129,30 +131,6 @@ const RadTilesBar = () => {
           captionStyle={{ ...globalStyles.textWithShadow }}
           containerStyle={styles.contactContainer}
         />
-        <Card
-          containerStyle={{
-            ...globalStyles.containerShadow,
-            marginBottom: 10,
-            padding: 0,
-            width: "75%",
-            height: "20%",
-            backgroundColor: colors.radBlack,
-            alignSelf: "center",
-          }}
-        >
-          <Card.Image source={{ uri: cardImage }} />
-          <Text
-            style={{
-              ...globalStyles.textWithShadow,
-              paddingBottom: 10,
-              color: colors.radWhite,
-            }}
-          >
-            "Now I will take the oil of Life, the eggs of Destiny, the pan of
-            Justice, the sausage of Truth, and go to cook the scrambled eggs of
-            the Apocalypse"
-          </Text>
-        </Card>
       </ScrollView>
     </>
   );
@@ -160,10 +138,9 @@ const RadTilesBar = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingBottom: 200,
   },
   lottieStyle: {
-    height: 150,
+    height: 110,
     alignSelf: "flex-end",
   },
   title: {
@@ -188,13 +165,16 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   theTileStyle: {
+    flex: 1,
     width: "70%",
-    alignSelf: "flex-start",
+    height: "20%",
     marginLeft: 10,
+    marginBottom: 20,
   },
 
   introTileImage: {
     borderTopLeftRadius: 50,
+    height: 250,
   },
 
   contactContainer: {
