@@ -1,11 +1,14 @@
 
-# Rad-Dish
+# Rad-Dish 
 
 A food service app specializing on creating customized african cuizines taking into considerations client allergies.
 
+
+<img src="https://cdn.dribbble.com/users/1642591/screenshots/6306223/dribbble_business.gif" width="300" height="270" /> 
+
 - clients Register,
 - Request for a chef based on a delicacy
-- chef goes to clients address and cooks the delicacy bearing the clients allergies in mind
+- chef goes to clients address, cooks the delicacy bearing the clients allergies in mind and effects some adjustments
 
 
 ## Demo
