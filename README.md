@@ -1,21 +1,25 @@
 
 # Rad-Dish
 
-A food service app specializing on creating customized african cuizines taking into considerations client allergies
+A food service app specializing on creating customized african cuizines taking into considerations client allergies.
+
+- clients Register,
+- Request for a chef based on a delicacy
+- chef goes to clients address and cooks the delicacy bearing the clients allergies in mind
 
 
 ## Demo
 order..
 
-- Intro Page                  
-- Greeting Page
+- Welcome Page                 
 - Register Page
 - Login Page
-- Data Entry Page
-- Data View/Update Page
-- Data Deletion Page
+- Home Page
+- About Page
+- Request Page
+- Sign Out functionality
 
-<img src="https://github.com/AdamuAbba/log_book/blob/main/images/Demo/introPage.gif" width="250" height="550" /> ---- <img src="https://github.com/AdamuAbba/log_book/blob/main/images/Demo/welcomeScreen.gif" width="250" height="550" /> ---- <img src="https://github.com/AdamuAbba/log_book/blob/main/images/Demo/registerPage.gif" width="250" height="550" /> ---- <img src="https://github.com/AdamuAbba/log_book/blob/main/images/Demo/loginScreen.gif" width="250" height="550" /> ---- <img src="https://github.com/AdamuAbba/log_book/blob/main/images/Demo/dataEntryPage.gif" width="250" height="550" /> ---- <img src="https://github.com/AdamuAbba/log_book/blob/main/images/Demo/dataViewAndEdit.gif" width="250" height="550" /> ---- <img src="https://github.com/AdamuAbba/log_book/blob/main/images/Demo/deleteDataPage.gif" width="250" height="550" />
+<img src="https://github.com/AdamuAbba/Rad-Dish/blob/main/RadishDemoPics/welcomePage.gif" width="250" height="550" /> ---- <img src="https://github.com/AdamuAbba/Rad-Dish/blob/main/RadishDemoPics/registerPage.gif" width="250" height="550" /> ---- <img src="https://github.com/AdamuAbba/Rad-Dish/blob/main/RadishDemoPics/loginPage.gif" width="250" height="550" /> ---- <img src="https://github.com/AdamuAbba/Rad-Dish/blob/main/RadishDemoPics/homePage.gif" width="250" height="550" /> ---- <img src="https://github.com/AdamuAbba/Rad-Dish/blob/main/RadishDemoPics/aboutPage.gif" width="250" height="550" /> ---- <img src="https://github.com/AdamuAbba/Rad-Dish/blob/main/RadishDemoPics/requestPage.gif" width="250" height="550" /> ---- <img src="https://github.com/AdamuAbba/Rad-Dish/blob/main/RadishDemoPics/signOut.gif" width="250" height="550" />
 ## Authors
 
 - [Abba Adamu](https://github.com/AdamuAbba)
@@ -39,6 +43,8 @@ order..
 ## Roadmap
 
 - enable better ios optimization
+- test and make responsive on ios
+- refactor codebase
 
   
 ## Tech Stack
@@ -66,5 +72,6 @@ This project is used by the following companies:
 ## Appendix
 
 redux as a state management library really made things easier in the app
+so to make things even easier, i used reduxToolkit instead
 
   
