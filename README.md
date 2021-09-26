@@ -1,7 +1,7 @@
 
 # Rad-Dish 
 
-A food service app specializing on creating customized african cuizines taking into considerations client allergies.
+A food service app specialising in creating customised african cuisines taking into considerations client allergies.
 
 
 <img src="https://cdn.dribbble.com/users/1642591/screenshots/6306223/dribbble_business.gif" width="300" height="270" /> 
