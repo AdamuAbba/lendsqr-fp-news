@@ -25,7 +25,11 @@ const UserAuthStack = () => {
         <Stack.Screen
           name="WELCOME"
           component={WelcomeScreen}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+            headerLeft: () => null,
+            gestureEnabled: false,
+          }}
         />
         <Stack.Screen
           name="REGISTER"
