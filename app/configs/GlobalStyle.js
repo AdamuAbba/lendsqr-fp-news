@@ -1,26 +1,26 @@
-import { StyleSheet } from "react-native";
-import colors from "./colors";
+import { StyleSheet } from 'react-native';
+import colors from './colors';
 export const globalStyles = StyleSheet.create({
   container: {
     flex: 1,
-    height: "100%",
-    width: "100%",
+    height: '100%',
+    width: '100%',
   },
   globalTitleFont: {
     fontSize: 20,
     color: colors.radWhite,
-    fontFamily: "AbrilFatface-Regular",
+    fontFamily: 'AbrilFatface-Regular',
   },
   buttonConfig: {
     backgroundColor: colors.radRed,
   },
   routeHeaderStyles: {
-    fontFamily: "AbrilFatface-Regular",
+    fontFamily: 'AbrilFatface-Regular',
     fontSize: 17,
   },
 
   containerShadow: {
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: { width: 0.5, height: 0.5 },
     shadowOpacity: 1,
     shadowRadius: 2,
@@ -28,17 +28,17 @@ export const globalStyles = StyleSheet.create({
   },
 
   textWithShadow: {
-    textAlign: "center",
-    fontFamily: "AbrilFatface-Regular",
-    textShadowColor: "#000",
+    textAlign: 'center',
+    fontFamily: 'AbrilFatface-Regular',
+    textShadowColor: '#000',
     textShadowOffset: { width: 0.5, height: 0.5 },
   },
 
   button: {
-    width: "50%",
-    alignSelf: "center",
+    width: '50%',
+    alignSelf: 'center',
     borderRadius: 20,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: { width: 0.5, height: 0.5 },
     shadowOpacity: 1,
     shadowRadius: 2,
@@ -46,41 +46,41 @@ export const globalStyles = StyleSheet.create({
   },
 
   input: {
-    borderBottomColor: colors.radOrange,
-    borderRightColor: colors.radOrange,
+    borderBottomColor: colors.radRed,
+    borderRightColor: colors.radRed,
     borderWidth: 3,
     borderRadius: 15,
     backgroundColor: colors.radWhite,
     paddingLeft: 10,
-    fontFamily: "AbrilFatface-Regular",
-    textShadowColor: "#000",
+    fontFamily: 'AbrilFatface-Regular',
+    textShadowColor: '#000',
     textShadowOffset: { width: 0.5, height: 0.5 },
-    textAlign: "left",
+    textAlign: 'left',
     fontSize: 14,
   },
   label: {
     color: colors.radWhite,
-    fontFamily: "AbrilFatface-Regular",
+    fontFamily: 'AbrilFatface-Regular',
   },
   iconColor: {
-    backgroundColor: colors.radOrange,
+    backgroundColor: colors.radRed,
   },
   dividerIcon: {
     borderRadius: 10,
-    width: "90%",
-    alignSelf: "center",
+    width: '90%',
+    alignSelf: 'center',
     elevation: 5,
   },
   bannerTextView: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   buttonTitle: {
-    textAlign: "center",
-    fontFamily: "AbrilFatface-Regular",
+    textAlign: 'center',
+    fontFamily: 'AbrilFatface-Regular',
     fontSize: 17,
-    textShadowColor: "#000",
+    textShadowColor: '#000',
     textShadowOffset: { width: 0.5, height: 0.5 },
     textShadowRadius: 1,
   },

@@ -1,13 +1,13 @@
-import React from "react";
-import { Avatar } from "react-native-elements/dist/avatar/Avatar";
-import { StyleSheet } from "react-native";
+import React from 'react';
+import { Avatar } from 'react-native-elements/dist/avatar/Avatar';
+import { StyleSheet } from 'react-native';
 const RadDishLogo = () => {
   return (
     <>
       <Avatar
         rounded
         containerStyle={styles.container}
-        source={require("../assets/RadishLogo.png")}
+        source={require('assets/RadishLogo.png')}
       />
     </>
   );

@@ -1,23 +1,23 @@
-import React from "react";
-import { View, StyleSheet, ScrollView, ImageBackground } from "react-native";
-import { Tile, Text, Icon, Card, Button } from "react-native-elements";
-import colors from "../configs/colors";
-import LottieView from "lottie-react-native";
-import { globalStyles } from "../configs/GlobalStyle";
+import React from 'react';
+import { View, StyleSheet, ScrollView, ImageBackground } from 'react-native';
+import { Tile, Text, Icon, Card, Button } from 'react-native-elements';
+import colors from '../configs/colors';
+import LottieView from 'lottie-react-native';
+import { globalStyles } from '../configs/GlobalStyle';
 const firstTileImage =
-  "https://images.unsplash.com/photo-1558818498-28c1e002b655?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80";
+  'https://images.unsplash.com/photo-1558818498-28c1e002b655?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80';
 
 const secondTileImage =
-  "https://images.unsplash.com/photo-1505576399279-565b52d4ac71?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8aGVhbHRofGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60";
+  'https://images.unsplash.com/photo-1505576399279-565b52d4ac71?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8aGVhbHRofGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60';
 
 const featuredImage =
-  "https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80";
+  'https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80';
 
 const cardImage =
-  "https://images.unsplash.com/photo-1594063354900-8784ad8f9d5f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80";
+  'https://images.unsplash.com/photo-1594063354900-8784ad8f9d5f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80';
 
 const secondFeaturedImage =
-  "https://images.unsplash.com/photo-1578160112054-954a67602b88?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80";
+  'https://images.unsplash.com/photo-1578160112054-954a67602b88?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80';
 const RadTilesBar = () => {
   return (
     <>
@@ -63,13 +63,13 @@ const RadTilesBar = () => {
           contentContainerStyle={{
             ...globalStyles.containerShadow,
             ...styles.tileContainer,
-            backgroundColor: "#9f694f",
+            backgroundColor: '#9f694f',
             borderBottomRightRadius: 0,
             borderBottomLeftRadius: 50,
           }}
           containerStyle={{
             ...styles.theTileStyle,
-            alignSelf: "flex-end",
+            alignSelf: 'flex-end',
             marginRight: 10,
             marginLeft: 0,
           }}
@@ -93,9 +93,9 @@ const RadTilesBar = () => {
           style={{
             height: 250,
             flex: 1,
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
             marginBottom: 10,
           }}
           resizeMode="cover"
@@ -110,13 +110,13 @@ const RadTilesBar = () => {
               color: colors.radWhite,
             }}
           >
-            "There is no love sincerer than the love of food".{"\n"}George
+            "There is no love sincerer than the love of food".{'\n'}George
             Bernard Shaw
           </Text>
           <LottieView
             style={{ ...styles.lottieStyle }}
             autoPlay
-            source={require("../assets/images/loveFood.json")}
+            source={require('assets/images/loveFood.json')}
           />
         </ImageBackground>
 
@@ -141,22 +141,22 @@ const styles = StyleSheet.create({
   },
   lottieStyle: {
     height: 110,
-    alignSelf: "flex-end",
+    alignSelf: 'flex-end',
   },
   title: {
-    fontFamily: "AbrilFatface-Regular",
+    fontFamily: 'AbrilFatface-Regular',
     color: colors.radWhite,
   },
   contactUsTile: {
     flex: 1,
     marginTop: 7,
     marginBottom: 7,
-    width: "95%",
-    alignItems: "center",
+    width: '95%',
+    alignItems: 'center',
   },
   tileContainer: {
     flex: 1,
-    backgroundColor: "#fe8150",
+    backgroundColor: '#fe8150',
     borderBottomRightRadius: 50,
     marginBottom: 10,
   },
@@ -166,8 +166,8 @@ const styles = StyleSheet.create({
   },
   theTileStyle: {
     flex: 1,
-    width: "70%",
-    height: "20%",
+    width: '70%',
+    height: '20%',
     marginLeft: 10,
     marginBottom: 20,
   },
@@ -180,8 +180,8 @@ const styles = StyleSheet.create({
   contactContainer: {
     flex: 1,
     marginBottom: 7,
-    width: "100%",
-    alignSelf: "center",
+    width: '100%',
+    alignSelf: 'center',
   },
 });
 export default RadTilesBar;

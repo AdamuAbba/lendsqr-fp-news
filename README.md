@@ -1,5 +1,4 @@
-
-# Rad-Dish 
+# Rad-Dish
 
 A food service app specialising in creating customised african cuisines taking into considerations client allergies.
 
@@ -11,11 +10,11 @@ A food service app specialising in creating customised african cuisines taking i
 - Request for a chef based on a delicacy
 - chef goes to clients address, cooks the delicacy bearing the clients allergies in mind and effects some adjustments
 
-
 ## Demo
+
 order..
 
-- Welcome Page                 
+- Welcome Page
 - Register Page
 - Login Page
 - Home Page
@@ -23,13 +22,12 @@ order..
 - Request Page
 - Sign Out functionality
 
-<img src="https://github.com/AdamuAbba/Rad-Dish/blob/main/RadishDemoPics/welcomePage.gif" width="250" height="550" /> ---- <img src="https://github.com/AdamuAbba/Rad-Dish/blob/main/RadishDemoPics/registerPage.gif" width="250" height="550" /> ---- <img src="https://github.com/AdamuAbba/Rad-Dish/blob/main/RadishDemoPics/loginPage.gif" width="250" height="550" /> ---- <img src="https://github.com/AdamuAbba/Rad-Dish/blob/main/RadishDemoPics/homePage.gif" width="250" height="550" /> ---- <img src="https://github.com/AdamuAbba/Rad-Dish/blob/main/RadishDemoPics/aboutPage.gif" width="250" height="550" /> ---- <img src="https://github.com/AdamuAbba/Rad-Dish/blob/main/RadishDemoPics/requestPage.gif" width="250" height="550" /> ---- <img src="https://github.com/AdamuAbba/Rad-Dish/blob/main/RadishDemoPics/signOut.gif" width="250" height="550" />
 ## Authors
 
 - [Abba Adamu](https://github.com/AdamuAbba)
 
-  
 ## 🔗 Links
+
 <a href="https://www.facebook.com/izshytypes" target="_blank">
 <img src="https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white" alt="facebook" />
 </a>
@@ -46,23 +44,20 @@ order..
 <img alt="linkedIn" src="https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" />
 </a>
 
-  
 ## Features
 
 - simple design
-- Simple fluid React-native animations with {Moti.fyi} animation library 
+- Simple fluid React-native animations with {Moti.fyi} animation library
 - firebase Authentication service
 - firebase realtime Database
 - persistent loggin
 
-  
 ## Roadmap
 
 - enable better ios optimization
 - test and make responsive on ios
 - refactor codebase
 
-  
 ## Tech Stack
 
 **Client:** <a href="https://reactnative.dev/" target="_blank">
@@ -72,30 +67,24 @@ order..
 <img alt="redux" src="https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white"/>
 </a>
 
-
 **Server:** <a href="https://firebase.google.com/" target="_blank">
 <img alt="firebase" src="https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black" />
 </a>
 
-  
 ## Acknowledgements
 
- - [React-native docs](https://reactnative.dev/)
- - [React native element docs](https://reactnativeelements.com/)
- - [firebase](https://firebase.google.com/)
- - [readme.so](https://readme.so/)
+- [React-native docs](https://reactnative.dev/)
+- [React native element docs](https://reactnativeelements.com/)
+- [firebase](https://firebase.google.com/)
+- [readme.so](https://readme.so/)
 
-  
 ## Used By
 
 This project is used by the following companies:
 
 - [Rad-Dish Nig Ltd](https://raddishdotcom.wordpress.com/)
 
-  
 ## Appendix
 
 redux as a state management library really made things easier in the app
 so to make things even easier, i used reduxToolkit instead
-
-  
