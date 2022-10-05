@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "rad-dish",
-    "slug": "rad-dish-push-1",
+    "name": "FP News",
+    "slug": "fp-news",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./app/assets/icon.png",
+    "icon": "./app/assets/images/Icon.png",
     "splash": {
-      "image": "./app/assets/splash.png",
+      "image": "./app/assets/images/splash.png",
       "resizeMode": "cover"
     },
     "updates": {
@@ -18,14 +18,14 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./app/assets/adaptive-icon.png",
+        "foregroundImage": "./app/assets/images/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
       "favicon": "./app/assets/favicon.png"
     },
-    "description": "almost done",
-    "githubUrl": "https://github.com/AdamuAbba/Rad-Dish.git"
+    "description": "Lendsqr fp news app",
+    "githubUrl": "https://github.com/AdamuAbba/lendsqr-fp-news.git"
   }
 }
