@@ -4,10 +4,17 @@
     "slug": "fp-news",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./app/assets/images/Icon.png",
+    "icon": "./src/assets/images/icon.png",
+    "plugins": [
+      "@react-native-google-signin/google-signin",
+      "@react-native-firebase/app",
+      "@react-native-firebase/perf",
+      "@react-native-firebase/crashlytics"
+    ],
     "splash": {
-      "image": "./app/assets/images/splash.png",
-      "resizeMode": "cover"
+      "image": "./src/assets/images/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#CB77EA"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -18,14 +25,22 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./app/assets/images/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+        "foregroundImage": "./src/assets/images/adaptive-icon.png",
+        "backgroundColor": "#09163C"
+      },
+      "softwareKeyboardLayoutMode": "pan",
+      "package": "com.lendsqr.fpNews",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
-      "favicon": "./app/assets/favicon.png"
+      "favicon": "./src/assets/images/favicon.png"
     },
     "description": "Lendsqr fp news app",
-    "githubUrl": "https://github.com/AdamuAbba/lendsqr-fp-news.git"
+    "githubUrl": "https://github.com/AdamuAbba/lendsqr-fp-news.git",
+    "extra": {
+      "eas": {
+        "projectId": "08d52f92-c434-45d9-be5d-a8dfc6b68453"
+      }
+    }
   }
 }

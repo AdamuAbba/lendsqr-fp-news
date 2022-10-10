@@ -1,27 +1,40 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "jsx": "react-jsx",
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "jsx": "react-native",
+    "lib": ["dom", "esnext"],
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "isolatedModules": true,
-    "lib": ["es6"],
     "moduleResolution": "node",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
+    "alwaysStrict": true,
     "noEmit": true,
     "strict": true,
     "target": "esnext",
     "baseUrl": "./",
     "paths": {
-      "assets/*": ["app/assets/*"],
-      "components/*": ["app/components/*"],
-      "screens/*": ["app/screens/*"],
-      "utils/*": ["app/utils/*"],
-      "routes/*": ["app/routes/*"],
-      "configs/*": ["app/configs/*"],
-      "features/*": ["app/features/*"],
-      "services/*": ["app/services/*"]
+      "assets/*": ["src/assets/*"],
+      "components/*": ["src/components/*"],
+      "screens/*": ["src/screens/*"],
+      "utils/*": ["src/utils/*"],
+      "routes/*": ["src/routes/*"],
+      "configs/*": ["src/configs/*"],
+      "features/*": ["src/features/*"],
+      "services/*": ["src/services/*"]
     }
   },
+
   "exclude": ["node_modules", "babel.config.js", "metro.config.js"]
 }
