@@ -1,6 +1,7 @@
 import {IFPTextInput} from 'src/configs/types';
 import {View} from 'react-native';
 import {TextInput, Text, useTheme} from 'react-native-paper';
+import {styles} from './FPTextInput.styles';
 
 const FPTextInput = ({
   icon,
@@ -10,19 +11,12 @@ const FPTextInput = ({
 }: IFPTextInput): JSX.Element => {
   const {colors} = useTheme();
   return (
-    <View
-      style={{
-        width: '90%',
-        alignSelf: 'center',
-        marginTop: 20,
-      }}>
+    <View style={styles.container}>
       <TextInput
+        returnKeyType="done"
         {...props}
         mode="flat"
-        style={{
-          height: 48,
-          backgroundColor: 'transparent',
-        }}
+        style={styles.textInput}
         underlineColor="#fff"
         selectionColor="#fff"
         placeholderTextColor="#fff"

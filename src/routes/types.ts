@@ -1,3 +1,5 @@
+import {MaterialTopTabScreenProps} from '@react-navigation/material-top-tabs';
+import {CompositeScreenProps} from '@react-navigation/native';
 import {StackScreenProps} from '@react-navigation/stack';
 import {Articles} from 'configs/types';
 
@@ -26,3 +28,12 @@ export type IAuthCheckStackParamsList = {
 
 export type IMainStackScreenProps<T extends keyof IMainStackParamsList> =
   StackScreenProps<IMainStackParamsList, T>;
+
+export type IAuthStackScreenProps<T extends keyof IAuthStackParamsList> =
+  StackScreenProps<IAuthStackParamsList, T>;
+
+export type ISignUpTabsScreenProps<T extends keyof ISignUpTabsParamsList> =
+  CompositeScreenProps<
+    MaterialTopTabScreenProps<ISignUpTabsParamsList, T>,
+    StackScreenProps<IAuthStackParamsList, 'sign-up-screen'>
+  >;

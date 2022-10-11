@@ -31,6 +31,8 @@ module.exports = function (api) {
             configs: './src/configs',
             features: './src/features',
             services: './src/services',
+            helpers: './src/helpers',
+            middleware: './src/middleware',
           },
         },
       ],

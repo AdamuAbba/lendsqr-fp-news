@@ -1,14 +1,13 @@
 import auth from '@react-native-firebase/auth';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import CustomAvatarComp from 'components/CustomAvatarComp';
-import React from 'react';
-import {StatusBar} from 'react-native';
-import {Appbar, useTheme} from 'react-native-paper';
 import FPDialogComp from 'components/FPDialogComp';
 import {ICustomHeader} from 'configs/types';
 import {setIsLoggedIn, setShowFPDialog} from 'features/user';
-import {useAppDispatch} from 'utils/hooks';
+import React from 'react';
+import {StatusBar} from 'react-native';
+import {Appbar, useTheme} from 'react-native-paper';
 import {googleSignInConfig} from 'utils/constants';
+import {useAppDispatch} from 'utils/hooks';
 
 const CustomHeader = ({
   navigation,

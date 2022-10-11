@@ -1,9 +1,14 @@
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {Dimensions, StatusBar} from 'react-native';
 import {MessageOptions} from 'react-native-flash-message';
+import moment from 'moment';
+import firestore from '@react-native-firebase/firestore';
+
+const UsersCollection = firestore().collection('Users');
+
+const FPTime = (Date: Date | string): string => moment(Date).calendar();
 
 const googleSignInConfig = GoogleSignin;
-
 googleSignInConfig.configure({
   webClientId:
     '442960332510-e81nk87s7lffi1aqqbhmkrdvredasn5l.apps.googleusercontent.com',
@@ -37,4 +42,6 @@ export {
   successConfig,
   errorConfig,
   googleSignInConfig,
+  FPTime,
+  UsersCollection,
 };

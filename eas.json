@@ -2,14 +2,19 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "android": {
+        "image": "ubuntu-18.04-jdk-11-ndk-r19c",
+        "buildType": "apk"
+      }
     },
     "preview": {
       "distribution": "internal"
     },
     "production": {
       "android": {
-        "buildType": "apk"
+        "buildType": "apk",
+        "image": "ubuntu-18.04-jdk-11-ndk-r19c"
       }
     }
   }

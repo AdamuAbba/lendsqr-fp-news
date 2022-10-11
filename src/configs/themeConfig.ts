@@ -12,5 +12,6 @@ export const theme = {
     accent: '#1f1f1f',
     background: '#fff',
     text: '#fff',
+    placeholder: '#fff',
   },
 };

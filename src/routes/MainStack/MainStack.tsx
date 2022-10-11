@@ -1,4 +1,7 @@
-import {createStackNavigator} from '@react-navigation/stack';
+import {
+  CardStyleInterpolators,
+  createStackNavigator,
+} from '@react-navigation/stack';
 import {useTheme} from 'react-native-paper';
 import CustomHeader from 'components/CustomHeader';
 import {IMainStackParamsList} from 'routes/types';
@@ -13,10 +16,10 @@ const MainStack = (): JSX.Element => {
   return (
     <Navigator
       initialRouteName="news-listing-screen"
-      screenOptions={({route}) => ({
-        header: props => <CustomHeader route={route} {...props} />,
-        cardStyle: {backgroundColor: colors.primary},
-      })}>
+      screenOptions={{
+        header: props => <CustomHeader {...props} />,
+        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+      }}>
       <Screen name="news-listing-screen" component={NewsListingScreen} />
       <Screen name="news-details-screen" component={NewsDetailsScreen} />
     </Navigator>

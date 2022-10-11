@@ -32,7 +32,9 @@
       "routes/*": ["src/routes/*"],
       "configs/*": ["src/configs/*"],
       "features/*": ["src/features/*"],
-      "services/*": ["src/services/*"]
+      "services/*": ["src/services/*"],
+      "helpers/*": ["src/helpers/*"],
+      "middleware/*": ["src/middleware/*"]
     }
   },
 

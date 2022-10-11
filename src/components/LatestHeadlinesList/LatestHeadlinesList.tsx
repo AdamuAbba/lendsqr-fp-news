@@ -1,19 +1,38 @@
 import {MaterialIcons} from '@expo/vector-icons';
-import {View as MotiView} from 'moti';
+import {selectUser} from 'features/user';
+import {idGenerator} from 'helpers/functions';
+import {errorCatcher} from 'middleware/errorCatcher';
+import {logEvent} from 'middleware/eventLogger';
 import React from 'react';
 import {FlatList, Image, View} from 'react-native';
-import {List, Text, useTheme} from 'react-native-paper';
+import {List, Text, TouchableRipple, useTheme} from 'react-native-paper';
+import {FPTime} from 'utils/constants';
+import {useAppSelector} from 'utils/hooks';
 import {styles} from './LatestHeadlinesList.style';
 import {IHeadLinesRenderItem, ILatestHeadlinesList} from './types';
+import * as analytics from 'expo-firebase-analytics';
 
 const _renderItem = ({
   item,
   index,
   navigation,
 }: IHeadLinesRenderItem): JSX.Element => {
+  const userData = useAppSelector(selectUser);
   const {colors} = useTheme();
-  const handleOnCardPress = (): void => {
-    navigation.navigate('news-details-screen', {articles: item});
+
+  const handleOnCardPress = async (): Promise<void> => {
+    try {
+      navigation.navigate('news-details-screen', {articles: item});
+      // await logEvent(userData, {
+      //   event_id: idGenerator(),
+      //   function_name: 'handleOnCardPress',
+      //   trigger_time: FPTime(new Date()),
+      //   user_id: userData.uid,
+      // });
+      await analytics.logEvent('btn_press_trigger', {test: 'test'});
+    } catch (error) {
+      await errorCatcher(userData, error);
+    }
   };
 
   const Title = (): JSX.Element => {
@@ -57,13 +76,10 @@ const _renderItem = ({
     );
   };
   return (
-    <MotiView
-      from={{scale: 0, opacity: 0}}
-      transition={{type: 'spring', delay: index * 45, duration: 600}}
-      animate={{scale: 1, opacity: 1}}
+    <TouchableRipple
+      onPress={handleOnCardPress}
       style={{...styles.listCardView, backgroundColor: colors.surface}}>
       <List.Item
-        onPress={handleOnCardPress}
         title={() => <Title />}
         description={() => <Description />}
         left={props => (
@@ -74,7 +90,7 @@ const _renderItem = ({
           />
         )}
       />
-    </MotiView>
+    </TouchableRipple>
   );
 };
 

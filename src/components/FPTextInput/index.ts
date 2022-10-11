@@ -1,1 +1,1 @@
-export { default } from './FPTextInput';
+export {default} from './FPTextInput';

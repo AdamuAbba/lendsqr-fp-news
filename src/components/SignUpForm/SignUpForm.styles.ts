@@ -57,7 +57,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   cardBody: {
-    borderBottomColor: colors.primary,
     borderBottomWidth: 3,
     justifyContent: 'center',
     alignItems: 'center',

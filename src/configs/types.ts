@@ -1,5 +1,3 @@
-import {DrawerHeaderProps} from '@react-navigation/drawer';
-import {RouteProp} from '@react-navigation/native';
 import {StackHeaderProps} from '@react-navigation/stack';
 import {ComponentProps} from 'react';
 import {TextInput} from 'react-native-paper';
@@ -7,7 +5,6 @@ import store from 'src/features/store';
 import {LoginSchema} from 'src/utils/schemas/login';
 import {SignUpSchema} from 'src/utils/schemas/signUp';
 import * as yup from 'yup';
-import {IMainStackParamsList} from '../routes/types';
 
 //redux types
 export type RootState = ReturnType<typeof store.getState>;
@@ -17,23 +14,19 @@ export interface IUserSliceInitialState {
   isLoggedIn: boolean;
   showFPDialog: boolean;
   userFormData: IUserFormData | {};
-  user: IUser | null;
+  user: IUser;
 }
 export interface IUser {
   displayName: string | null;
   email: string | null;
   emailVerified: boolean;
   isAnonymous: boolean;
-  metadata: Metadata;
+  creationTime: string;
+  lastSignInTime: string;
   phoneNumber: string | null;
   photoURL: string | null;
   uid: string;
   providerId: string;
-}
-
-interface Metadata {
-  creationTime?: string;
-  lastSignInTime?: string;
 }
 
 type IUserFormData = Omit<ISignUpFormValues, 'createdOn'> & {
@@ -57,10 +50,10 @@ export type IFPTextInput = ComponentProps<typeof TextInput> & {
   errorText?: string;
 };
 
-export type ICustomHeader = Pick<StackHeaderProps, 'back' | 'navigation'> & {
-  route: RouteProp<IMainStackParamsList, keyof IMainStackParamsList>;
-};
-
+export type ICustomHeader = Pick<
+  StackHeaderProps,
+  'back' | 'navigation' | 'route'
+>;
 export type ISignUpFormValues = yup.InferType<typeof SignUpSchema>;
 export type ILoginFormValues = yup.InferType<typeof LoginSchema>;
 
