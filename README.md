@@ -36,14 +36,7 @@ A basic news app implemented with React native (Typescript) 🥲 pardon my desig
 - Authentication Route
 - Main Route
 
-<img src="demo/splash_screen.jpg"  width="130" height="270">
-<img src="demo/sign_up_1.jpg"  width="130" height="270">
-<img src="demo/sign_up_2.jpg"  width="130" height="270">
-<img src="demo/login.jpg"  width="130" height="270">
-<img src="demo/load_screen.jpg"  width="130" height="270">
-<img src="demo/news_listing_screen.jpg"  width="130" height="270">
-<img src="demo/news_details_screen.jpg"  width="130" height="270">
-<img src="demo/sign_out.jpg"  width="130" height="270">
+<img src="demo/splash_screen.jpg"  width="130" height="270"> <img src="demo/sign_up_1.jpg"  width="130" height="270"> <img src="demo/sign_up_2.jpg"  width="130" height="270"> <img src="demo/login.jpg"  width="130" height="270"> <img src="demo/load_screen.jpg"  width="130" height="270"> <img src="demo/news_listing_screen.jpg"  width="130" height="270"> <img src="demo/news_details_screen.jpg"  width="130" height="270"> <img src="demo/sign_out.jpg"  width="130" height="270">
 
 ## User story
 
