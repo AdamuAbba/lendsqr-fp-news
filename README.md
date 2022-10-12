@@ -1,28 +1,57 @@
-# Rad-Dish
+# FP News v1
 
-A food service app specialising in creating customised african cuisines taking into considerations client allergies.
+A basic news app implemented with React native (Typescript) 🥲 pardon my design skills.
 
-<div align="center">
-<img src="https://cdn.dribbble.com/users/1642591/screenshots/6306223/dribbble_business.gif" width="500" height="290" /> 
-</div>
+# Table of contents
 
-- clients Register,
-- Request for a chef based on a delicacy
-- chef goes to clients address, cooks the delicacy bearing the clients allergies in mind and effects some adjustments
+1.  Installation
+2.  Project structure
+3.  Usage/user story
+4.  Author
+5.  Features
+6.  Tech stack
+7.  Appendix
 
-## Demo
+## Installation
 
-order..
+- clone repo
+  ```
+      git clone https://github.com/AdamuAbba/lendsqr-fp-news.git
+  ```
+- install dependencies
 
-- Welcome Page
-- Register Page
-- Login Page
-- Home Page
-- About Page
-- Request Page
-- Sign Out functionality
+  ```
+      yarn
+  ```
 
-## Authors
+- run android build `locally`
+
+  ```
+      npx expo run:android
+  ```
+
+## Project structure
+
+- Authentication Check Route
+- Authentication Route
+- Main Route
+
+<img src="demo/splash_screen.jpg"  width="130" height="270">
+<img src="demo/sign_up_1.jpg"  width="130" height="270">
+<img src="demo/sign_up_2.jpg"  width="130" height="270">
+<img src="demo/login.jpg"  width="130" height="270">
+<img src="demo/load_screen.jpg"  width="130" height="270">
+<img src="demo/news_listing_screen.jpg"  width="130" height="270">
+<img src="demo/news_details_screen.jpg"  width="130" height="270">
+<img src="demo/sign_out.jpg"  width="130" height="270">
+
+## User story
+
+- A user registers and signs in with [firebase Authentication](https://firebase.google.com/),
+- Access to the `News Listing Screen` and `News Details Screen` are granted
+- A user signs out with the sign out button on the top right corner of the screen
+
+## Author
 
 - [Abba Adamu](https://github.com/AdamuAbba)
 
@@ -46,45 +75,47 @@ order..
 
 ## Features
 
-- simple design
-- Simple fluid React-native animations with {Moti.fyi} animation library
-- firebase Authentication service
-- firebase realtime Database
-- persistent loggin
-
-## Roadmap
-
-- enable better ios optimization
-- test and make responsive on ios
-- refactor codebase
+- Basic design
+- Form state handling with [formik](https://formik.org)
+- Basic form validation with [yup validation](https://github.com/jquense/yup)
+- [firebase Authentication](https://firebase.google.com/)
+- [firebase Firestore to store user credentials](https://firebase.google.com/)
+- [firebase Crashlytics](https://firebase.google.com/)
+- [firebase Analytics and navigation logging](https://firebase.google.com/)
+- [firebase in app cloud messaging](https://firebase.google.com/)
+- [RapidApi](https://rapidapi.com/newscatcher-api-newscatcher-api-default/api/newscatcher) as service/api layer
+- Redux state management for storing local data
+- A button that breaks the app `Runtime Error`
 
 ## Tech Stack
 
-**Client:** <a href="https://reactnative.dev/" target="_blank">
-<img alt="react native" src="https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/>
-</a>
-<a href="https://redux-toolkit.js.org/" target="_blank">
-<img alt="redux" src="https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white"/>
-</a>
+**Client:** ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![Expo](https://img.shields.io/badge/expo-1C1E24?style=for-the-badge&logo=expo&logoColor=#D04A37)
+![React Native](https://img.shields.io/badge/react_native-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
+![ESLint](https://img.shields.io/badge/ESLint-4B3263?style=for-the-badge&logo=eslint&logoColor=white)
 
-**Server:** <a href="https://firebase.google.com/" target="_blank">
-<img alt="firebase" src="https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black" />
-</a>
+**Server:** ![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase)
 
-## Acknowledgements
-
-- [React-native docs](https://reactnative.dev/)
-- [React native element docs](https://reactnativeelements.com/)
-- [firebase](https://firebase.google.com/)
-- [readme.so](https://readme.so/)
-
-## Used By
-
-This project is used by the following companies:
-
-- [Rad-Dish Nig Ltd](https://raddishdotcom.wordpress.com/)
+[RapidApi](https://rapidapi.com/newscatcher-api-newscatcher-api-default/api/newscatcher)
 
 ## Appendix
 
-redux as a state management library really made things easier in the app
-so to make things even easier, i used reduxToolkit instead
+**Implementation summary:**
+
+- RTKQuery for accessing api layer with data caching
+- Each component is modularized
+
+```
+Component "folder level"
+│   Component.test.tsx
+│   Component.styles.ts
+│   Component.tsx
+│   index.tsx
+
+```
+
+- firebase in app messaging has been implemented successfully but not React native push notification due to project timeline
+
+- all firebase implementations can be monitored from the Google developer console.

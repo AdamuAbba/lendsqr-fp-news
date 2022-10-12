@@ -1,3 +1,4 @@
+import {FirebaseMessagingTypes} from '@react-native-firebase/messaging';
 import {StackHeaderProps} from '@react-navigation/stack';
 import {ComponentProps} from 'react';
 import {TextInput} from 'react-native-paper';
@@ -14,7 +15,12 @@ export interface IUserSliceInitialState {
   isLoggedIn: boolean;
   showFPDialog: boolean;
   userFormData: IUserFormData | {};
-  user: IUser;
+  user: IUser | null;
+  isFCM: boolean;
+  fcmPayload: {
+    title: string | null | undefined;
+    body: string | null | undefined;
+  } | null;
 }
 export interface IUser {
   displayName: string | null;
@@ -38,12 +44,6 @@ export interface GenericFirebaseApiResponse {
   rejected: any;
   pending: boolean;
 }
-
-export type IFPDialogComp = {
-  title: string;
-  content: string;
-  onConfirm: () => void;
-};
 
 export type IFPTextInput = ComponentProps<typeof TextInput> & {
   icon: string;

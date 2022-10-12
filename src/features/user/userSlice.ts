@@ -1,4 +1,6 @@
+import {IUser} from './../../configs/types';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {generatePushNotificationsToken} from 'helpers/functions';
 import {IUserSliceInitialState} from 'src/configs/types';
 
 const initialState: IUserSliceInitialState = {
@@ -6,6 +8,8 @@ const initialState: IUserSliceInitialState = {
   showFPDialog: false,
   userFormData: {},
   user: null,
+  isFCM: false,
+  fcmPayload: null,
 };
 
 export const userSlice = createSlice({
@@ -29,19 +33,36 @@ export const userSlice = createSlice({
       {payload}: PayloadAction<IUserSliceInitialState['userFormData']>,
     ) => {
       state.userFormData = payload;
-      console.log(state.userFormData);
     },
     setUser: (
       state,
       {payload}: PayloadAction<IUserSliceInitialState['user']>,
     ) => {
       state.user = payload;
-      console.log(state.user);
+      generatePushNotificationsToken(state.user as IUser);
+    },
+    setIsFCM: (
+      state,
+      {payload}: PayloadAction<IUserSliceInitialState['isFCM']>,
+    ) => {
+      state.isFCM = payload;
+    },
+    setFcmPayload: (
+      state,
+      {payload}: PayloadAction<IUserSliceInitialState['fcmPayload']>,
+    ) => {
+      state.fcmPayload = payload;
     },
   },
 });
 
-export const {setIsLoggedIn, setShowFPDialog, setUserFormData, setUser} =
-  userSlice.actions;
+export const {
+  setIsLoggedIn,
+  setShowFPDialog,
+  setUserFormData,
+  setUser,
+  setIsFCM,
+  setFcmPayload,
+} = userSlice.actions;
 
 export default userSlice;

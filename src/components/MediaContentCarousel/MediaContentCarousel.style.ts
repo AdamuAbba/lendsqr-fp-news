@@ -17,7 +17,6 @@ const styles = StyleSheet.create({
   mediaText: {
     fontSize: 15,
     marginRight: 3,
-    fontWeight: 'bold',
   },
   mediaView: {
     flexDirection: 'row',

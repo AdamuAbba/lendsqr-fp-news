@@ -4,7 +4,7 @@ import {View} from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 import {IMediaContentCarousel} from './types';
 import {styles} from './MediaContentCarousel.style';
-import {Colors, Surface, Text, useTheme} from 'react-native-paper';
+import {Surface, useTheme, Text} from 'react-native-paper';
 import {MaterialIcons} from '@expo/vector-icons';
 
 const MediaContentCarousel = ({media_content}: IMediaContentCarousel) => {

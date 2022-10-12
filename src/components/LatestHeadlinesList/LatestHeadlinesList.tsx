@@ -11,6 +11,7 @@ import {useAppSelector} from 'utils/hooks';
 import {styles} from './LatestHeadlinesList.style';
 import {IHeadLinesRenderItem, ILatestHeadlinesList} from './types';
 import * as analytics from 'expo-firebase-analytics';
+import {IUser} from 'configs/types';
 
 const _renderItem = ({
   item,
@@ -23,15 +24,9 @@ const _renderItem = ({
   const handleOnCardPress = async (): Promise<void> => {
     try {
       navigation.navigate('news-details-screen', {articles: item});
-      // await logEvent(userData, {
-      //   event_id: idGenerator(),
-      //   function_name: 'handleOnCardPress',
-      //   trigger_time: FPTime(new Date()),
-      //   user_id: userData.uid,
-      // });
       await analytics.logEvent('btn_press_trigger', {test: 'test'});
     } catch (error) {
-      await errorCatcher(userData, error);
+      await errorCatcher(userData as IUser, error);
     }
   };
 
@@ -70,7 +65,7 @@ const _renderItem = ({
             size={20}
             style={styles.iconConfig}
           />
-          <Text>{item.published_date}</Text>
+          <Text>{FPTime(item.published_date)}</Text>
         </View>
       </View>
     );
@@ -94,6 +89,8 @@ const _renderItem = ({
   );
 };
 
+const MemoizedRenderItem = React.memo(_renderItem);
+
 const LatestHeadlinesList = ({data, navigation}: ILatestHeadlinesList) => {
   return (
     <FlatList
@@ -102,7 +99,7 @@ const LatestHeadlinesList = ({data, navigation}: ILatestHeadlinesList) => {
       keyExtractor={(_, index) => index.toString()}
       testID="main-view"
       renderItem={({item, index}) => (
-        <_renderItem navigation={navigation} index={index} item={item} />
+        <MemoizedRenderItem navigation={navigation} index={index} item={item} />
       )}
     />
   );

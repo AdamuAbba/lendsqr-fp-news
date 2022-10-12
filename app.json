@@ -3,6 +3,7 @@
     "name": "FP News",
     "slug": "fp-news",
     "version": "1.0.0",
+    "owner": "shyweirdo",
     "orientation": "portrait",
     "icon": "./src/assets/images/icon.png",
     "privacy": "public",
@@ -12,7 +13,6 @@
       "@react-native-firebase/app",
       "@react-native-firebase/perf",
       "@react-native-firebase/crashlytics",
-      "@notifee/react-native",
       [
         "expo-build-properties",
         {

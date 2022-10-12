@@ -1,4 +1,7 @@
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
+import messaging, {
+  FirebaseMessagingTypes,
+} from '@react-native-firebase/messaging';
 import {
   NavigationContainer,
   useNavigationContainerRef,
@@ -8,17 +11,20 @@ import {
   createStackNavigator,
 } from '@react-navigation/stack';
 import * as Analytics from 'expo-firebase-analytics';
-import React, {useCallback, useEffect, useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import AuthStack from 'routes/AuthStack';
 import MainStack from 'routes/MainStack';
 import {IAuthCheckStackParamsList} from 'routes/types';
-import {selectIsLoggedIn, setIsLoggedIn, setUser} from 'src/features/user';
+import {
+  selectIsLoggedIn,
+  setFcmPayload,
+  setIsFCM,
+  setIsLoggedIn,
+  setShowFPDialog,
+  setUser,
+} from 'src/features/user';
 import {FPTime} from 'utils/constants';
 import {useAppDispatch, useAppSelector} from 'utils/hooks';
-import {Alert} from 'react-native';
-import messaging, {
-  FirebaseMessagingTypes,
-} from '@react-native-firebase/messaging';
 
 const Stack = createStackNavigator<IAuthCheckStackParamsList>();
 const {Screen, Navigator} = Stack;
@@ -26,7 +32,6 @@ const {Screen, Navigator} = Stack;
 const AuthCheckStack = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
-
   const navigationRef = useNavigationContainerRef();
   const routeNameRef = useRef();
 
@@ -51,50 +56,68 @@ const AuthCheckStack = (): JSX.Element => {
    * A listener function which triggers when auth state changed
    * @return void
    */
-  const OnAuthStateChanged = useCallback(
-    (user: FirebaseAuthTypes.User | null) => {
-      (async () => {
-        if (user) {
-          dispatch(setIsLoggedIn(true));
-          const {
+  const OnAuthStateChanged = async (user: FirebaseAuthTypes.User | null) => {
+    try {
+      if (user) {
+        dispatch(setIsLoggedIn(true));
+        const {
+          displayName,
+          email,
+          emailVerified,
+          isAnonymous,
+          metadata,
+          phoneNumber,
+          photoURL,
+          providerId,
+          uid,
+        } = user;
+        dispatch(
+          setUser({
             displayName,
             email,
             emailVerified,
             isAnonymous,
-            metadata,
+            creationTime: FPTime(metadata.creationTime as string),
+            lastSignInTime: FPTime(metadata.lastSignInTime as string),
             phoneNumber,
             photoURL,
             providerId,
             uid,
-          } = user;
-          dispatch(
-            setUser({
-              displayName,
-              email,
-              emailVerified,
-              isAnonymous,
-              creationTime: FPTime(metadata.creationTime as string),
-              lastSignInTime: FPTime(metadata.lastSignInTime as string),
-              phoneNumber,
-              photoURL,
-              providerId,
-              uid,
-            }),
-          );
-          console.log('you are logged in');
-        } else {
-          dispatch(setIsLoggedIn(false));
-          console.log('you are not logged in');
-        }
-      })();
-    },
-    [dispatch],
-  );
+          }),
+        );
+      } else {
+        dispatch(setIsLoggedIn(false));
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(OnAuthStateChanged);
-    return subscriber;
-  }, [OnAuthStateChanged]);
+    // Register FCM foreground handler
+    const messageSubscriber = messaging().onMessage(
+      async (remoteMessage: FirebaseMessagingTypes.RemoteMessage) => {
+        dispatch(setIsFCM(true));
+        dispatch(setShowFPDialog(true));
+        dispatch(
+          setFcmPayload({
+            title: remoteMessage?.notification?.title,
+            body: remoteMessage?.notification?.body,
+          }),
+        );
+      },
+    );
+    // Register FCM background handler
+    messaging().setBackgroundMessageHandler(async remoteMessage => {
+      console.log('Message handled in the background!', remoteMessage);
+    });
+    return () => {
+      // FCM
+      subscriber;
+      messageSubscriber;
+    };
+  }, []);
 
   return (
     <NavigationContainer

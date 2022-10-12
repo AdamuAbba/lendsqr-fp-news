@@ -1,4 +1,5 @@
 import FPTextInput from 'components/FPTextInput';
+import fontStyles from 'configs/fonts';
 import {ISignUpFormValues} from 'configs/types';
 import {setUserFormData} from 'features/user';
 import {Formik} from 'formik';

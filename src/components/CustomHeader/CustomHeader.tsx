@@ -36,11 +36,7 @@ const CustomHeader = ({
         subtitle={name === 'news-details-screen' ? 'Details' : 'Listings'}
       />
 
-      <FPDialogComp
-        content="Do you want to sign out ?"
-        onConfirm={handleSignOut}
-        title="sign out"
-      />
+      <FPDialogComp onConfirm={handleSignOut} />
 
       <CustomAvatarComp />
     </Appbar.Header>

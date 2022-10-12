@@ -4,8 +4,8 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useState} from 'react';
 import {View} from 'react-native';
 import {showMessage} from 'react-native-flash-message';
-import {errorConfig} from 'src/utils/constants';
-import {useAppDispatch} from 'src/utils/hooks';
+import {errorConfig, FPTime} from 'utils/constants';
+import {useAppDispatch} from 'utils/hooks';
 import {styles} from './GoogleSignInBtnWithLoader.style';
 import {TouchableRipple, useTheme, Text, Colors} from 'react-native-paper';
 import LottieView from 'lottie-react-native';
@@ -92,10 +92,8 @@ const GoogleSignInBtnWithLoader = (): JSX.Element => {
           email,
           emailVerified,
           isAnonymous,
-          metadata: {
-            creationTime: metadata.creationTime?.toString(),
-            lastSignInTime: metadata.lastSignInTime?.toString(),
-          },
+          creationTime: FPTime(metadata.creationTime as string),
+          lastSignInTime: FPTime(metadata.lastSignInTime as string),
           phoneNumber,
           photoURL,
           providerId,

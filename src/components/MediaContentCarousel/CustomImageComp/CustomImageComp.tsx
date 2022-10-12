@@ -2,6 +2,7 @@ import {Surface} from 'react-native-paper';
 import Animated from 'react-native-reanimated';
 import {styles} from './CustomImageComp.style';
 import {ICustomImageComp} from './types';
+import {memo} from 'react';
 
 const CustomImageComp = ({imgUrl}: ICustomImageComp): JSX.Element => {
   return (
@@ -17,4 +18,4 @@ const CustomImageComp = ({imgUrl}: ICustomImageComp): JSX.Element => {
   );
 };
 
-export default CustomImageComp;
+export default memo(CustomImageComp);

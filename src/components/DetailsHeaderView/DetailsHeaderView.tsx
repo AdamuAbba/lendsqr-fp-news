@@ -1,9 +1,9 @@
-import React from 'react';
-import {styles} from './DetailsHeaderView.styles';
-import {View as MotiView} from 'moti';
-import {Surface, Text, useTheme} from 'react-native-paper';
-import {View} from 'react-native';
 import {MaterialIcons} from '@expo/vector-icons';
+import React from 'react';
+import {View} from 'react-native';
+import {Surface, Text, useTheme} from 'react-native-paper';
+import {FPTime} from 'utils/constants';
+import {styles} from './DetailsHeaderView.styles';
 import {IDetailsHeaderView} from './types';
 
 const DetailsHeaderView = ({
@@ -46,7 +46,7 @@ const DetailsHeaderView = ({
             size={20}
             style={styles.iconConfig}
           />
-          <Text>{published_date}</Text>
+          <Text>{FPTime(published_date)}</Text>
         </View>
       </View>
     );

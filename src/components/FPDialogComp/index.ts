@@ -1,1 +1,1 @@
-export { default } from './FPDialogComp';
+export {default} from './FPDialogComp';
