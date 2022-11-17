@@ -1,9 +1,10 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
+import {Env} from 'Env';
 
 const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://newscatcher.p.rapidapi.com',
+    baseUrl: Env.BASE_URL,
     prepareHeaders: (headers, {}) => {
       headers.set(
         'X-RapidAPI-Key',

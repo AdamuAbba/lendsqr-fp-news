@@ -2,14 +2,25 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
-    },
-    "preview": {
-      "distribution": "internal"
+      "distribution": "internal",
+      "channel": "development",
+      "android": {
+        "buildType": "apk"
+      },
+      "ios": {
+        "simulator": true
+      },
+      "env": {
+        "APP_ENV": "development"
+      }
     },
     "production": {
       "android": {
         "buildType": "apk"
+      },
+      "channel": "production",
+      "env": {
+        "APP_ENV": "production"
       }
     }
   }

@@ -17,7 +17,6 @@ const NewsListingScreen = ({
 
   return (
     <View style={{...styles.container, backgroundColor: colors.primary}}>
-      <BreakMe />
       {isFetching ? (
         <NewsListPlaceholder />
       ) : isSuccess ? (

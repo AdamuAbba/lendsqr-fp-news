@@ -6,8 +6,7 @@ import {getPermissionsAsync, requestPermissionsAsync} from 'expo-notifications';
 import * as Random from 'expo-random';
 import {Alert} from 'react-native';
 import {UsersCollection} from 'utils/constants';
-const appConfig = require('../../app.json');
-const projectId = appConfig?.expo?.extra?.eas?.projectId;
+
 /**
  * a function that takes the authenticated user `displayName` and return the initials
  * @param `string`

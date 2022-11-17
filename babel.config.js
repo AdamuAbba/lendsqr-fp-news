@@ -33,6 +33,7 @@ module.exports = function (api) {
             services: './src/services',
             helpers: './src/helpers',
             middleware: './src/middleware',
+            Env: './Env.ts',
           },
         },
       ],
